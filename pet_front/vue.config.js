@@ -4,7 +4,6 @@ module.exports = defineConfig({
   lintOnSave: false,
 
   devServer: {
-    port: 8080,
     proxy: {
       '/huawei': {
         target: 'https://oauth-login.cloud.huawei.com',
@@ -14,7 +13,7 @@ module.exports = defineConfig({
         pathRewrite: {
           '^/huawei':"/"
         }
-      }
+      },
       
     }
   }

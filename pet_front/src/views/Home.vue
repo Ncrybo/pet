@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       images: [
-        '/images/swipe/1.png',
+        '/images/swipe/1.jpg',
         '/images/swipe/2.jpg',
       ]
     }

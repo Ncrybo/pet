@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="top">
-        <van-nav-bar left-arrow placeholder />
+        <van-nav-bar left-arrow placeholder @click-left="back"  />
     </div>
     <div class="main">
         <div class="title">
@@ -105,6 +105,9 @@ export default {
         "&scope=openid+profile";
       location.href = url;
     },
+    back() {
+      this.$router.go(-1);
+    }
   },
 
   mounted() {
