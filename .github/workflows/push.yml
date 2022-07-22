@@ -97,12 +97,13 @@ jobs:
       run:
         shell: bash
         working-directory: /www/pet
-    
-    - name: 停止现运行的18083端口的jar包
-      run: ps -ef | grep back.jar | grep -v grep | awk '{print $2}' | xargs kill -9
 
-    - name: 运行现有的jar包
-      run: nohup java -jar back.jar >temp.txt &
+    steps:
+      - name: 停止现运行的18083端口的jar包
+        run: ps -ef | grep back.jar | grep -v grep | awk '{print $2}' | xargs kill -9
+
+      - name: 运行现有的jar包
+        run: nohup java -jar back.jar >temp.txt &
 
 
 
