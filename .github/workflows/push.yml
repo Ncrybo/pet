@@ -22,10 +22,15 @@ jobs:
               with:
                   node-version: 16.15.0
 
+            - name: 查看当前子目录
+              run: ls
             #打开前端文件
             - name: 进去前端目录
-              run: ls
-            # 安装依赖
+              run: cd pet_front
+
+            - name: 输出当前目录
+              run: pwd 
+
             - name: 安装依赖
               run: npm install
 
