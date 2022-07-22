@@ -60,6 +60,10 @@ jobs:
     steps:
       # 上传腾讯云
       - name: ssh连接服务器并上传文件
+      - name: 查看子目录
+        run: |
+          pwd
+          ls
         # You may pin to the exact commit or the version.
         # uses: easingthemes/ssh-deploy@c711f2c3391cac2876bf4c833590077f02e4bcb8
         uses: easingthemes/ssh-deploy@v2.2.11
