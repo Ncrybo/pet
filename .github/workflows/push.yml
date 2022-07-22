@@ -79,10 +79,10 @@ jobs:
 
   run_jar:
     name: 执行jar包
-    runs-on: self-hosted
-
-    - name: 查看初始目录位置
-      run: pwd
+    runs-on: [self-hosted, linux, x64]
+    steps:
+      - name: 查看初始目录位置
+        run: pwd
 
 
 
