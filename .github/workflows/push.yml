@@ -73,7 +73,7 @@ jobs:
           # Remote port
           REMOTE_PORT: 22
           # Source directory
-          SOURCE: 'pet_front/dist/ , back/target/*.jar'
+          SOURCE: 'pet_front/dist/'
           # Target directory
           TARGET: '/www/pet'
 
