@@ -2,7 +2,7 @@
   <div class="home">
     <div class="top">
       <div class="search">
-        <van-search placeholder="ddddd" shape="round">
+        <van-search placeholder="请输入搜索关键词" shape="round">
       </van-search>
       </div>
     </div>
