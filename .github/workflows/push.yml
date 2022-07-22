@@ -26,7 +26,7 @@ jobs:
               run: ls
             #打开前端文件
             - name: 进去前端目录
-              run: cd pet_front
+              run: cd ./pet_front
 
             - name: 输出当前目录
               run: pwd 
