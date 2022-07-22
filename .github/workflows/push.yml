@@ -24,7 +24,7 @@ jobs:
 
             #打开前端文件
             - name: 进去前端目录
-              run: cd pet_front
+              run: pwd
             # 安装依赖
             - name: 安装依赖
               run: npm install
