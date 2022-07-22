@@ -24,6 +24,7 @@ jobs:
 
             # 安装依赖
             - name: 安装依赖
+              run: cd pet_front
               run: npm install
 
             # 打包
