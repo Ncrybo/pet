@@ -4,6 +4,7 @@
             <van-nav-bar left-arrow  @click-left="undo()" title="编辑地址"/>          
        </div>
        <van-address-edit
+        tel-maxlength="11"
         :area-list="areaList"
         show-delete
         :area-columns-placeholder="['请选择', '请选择', '请选择']"
@@ -12,7 +13,6 @@
         :address-info="{
             name: info.name,
             tel: info.tel,
-            addressDetail: info.address,
           }"
      />
     </div>
@@ -46,14 +46,26 @@ export default {
         },
         onSave(content) {
             let address = content.city + content.province + content.county + content.addressDetail    
-            Toast('save success')
-            this.$ajax.editAddress(content.name,address,content.tel,this.id)
-            this.$router.push({path:"/address"})
+            Toast.success('修改成功')
+            this.$ajax.editAddress(content.name,address,content.tel,this.id).then(
+                res => {
+                    if(res.code==100)
+                        this.$router.push({path:"/address"})
+                    else
+                        console.log(res)
+                }
+            )
         },
         onDelete() {
-            Toast('delete success')
-            this.$ajax.detAddress(this.id)
-            this.$router.push({path:"/address"})
+            Toast.success('delete success')
+            this.$ajax.detAddress(this.id).then(
+                res => {
+                    if(res.code == 100)
+                        this.$router.push({path:"/address"})
+                    else
+                        console.log(res)
+                }
+            )
         },
     },
 };

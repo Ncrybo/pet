@@ -4,6 +4,7 @@
             <van-nav-bar left-arrow  @click-left="undo()" title="添加地址"/>          
        </div>
        <van-address-edit
+        tel-maxlength="11"
         :area-list="areaList"
         :area-columns-placeholder="['请选择', '请选择', '请选择']"
         @save="onSave"
@@ -29,8 +30,12 @@ export default {
         onSave(content) {
             this.address = content.city + content.province + content.county + content.addressDetail
             Toast('save success');
-            this.$ajax.addAddress(this.uid,content.name,this.address,content.tel)
-            this.$router.push('/address')
+            this.$ajax.addAddress(this.uid,content.name,this.address,content.tel).then(
+                res => {
+                    if(res.code == 100)
+                        this.$router.push('/address')
+                }
+            )
         },
     },
 };

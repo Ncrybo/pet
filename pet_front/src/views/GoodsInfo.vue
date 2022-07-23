@@ -23,8 +23,17 @@
     <!--正文-->
     <div class="body">
         <div class="petimg"><img :src="goods.img" alt="" style="width: 100%; height:50vh"></div>
-        <div class="price">￥{{goods.price}}</div><div class="preprice">￥{{preprice}}&nbsp<van-icon name="question-o" /></div>
-        <div class="clearfix"></div>
+        <div>
+          <van-row>
+            <van-col class="price">
+              ￥{{goods.price}}
+            </van-col>
+            <van-col class="preprice">
+              ￥{{preprice}}
+            </van-col>
+          </van-row>
+        </div>
+     
         <div class="monthpay">支持分期|最低月付{{monthpay}}元</div>
         <div class="title">{{goods.goodsName}}&nbsp&nbsp
           <van-tag type="primary">公</van-tag>&nbsp
@@ -68,8 +77,8 @@
     <div class="vab">
       <van-goods-action>
         <van-goods-action-icon icon="chat-o" text="客服" dot />
-        <van-goods-action-icon icon="cart-o" text="购物车" badge="5" />
-        <van-goods-action-icon icon="shop-o" text="店铺" badge="12" />
+        <van-goods-action-icon icon="cart-o" text="购物车" badge="5" @click="gotocart"/>
+        <van-goods-action-icon icon="shop-o" text="店铺" badge="12" @click="gotoshop"/>
         <van-goods-action-button type="warning" text="加入购物车" @click="addCart"/>
         <van-goods-action-button type="danger" text="立即购买" />
       </van-goods-action>
@@ -126,19 +135,25 @@
             Toast(option.name);
             this.showShare = false;
           },
+          gotocart(){
+            this.$router.push("/cart")
+          },
+          gotoshop(){
+            this.$router.push("/shopInfo?shopName=" + this.goods.shopName);
+          },
           addCart(){
             let uid = window.localStorage.getItem("uid")
             let token = window.localStorage.getItem('token');
             if (token) {
               this.$ajax.addCart(uid,this.goodsId).then(
                 res => {        
-                    if(res)
+                    if(res.data)
                     {
-                      alert("添加购物车成功")
+                      Toast.success("添加成功")
                     }    
                     else
                     {
-                      alert("添加失败，商品已存在")
+                      Toast.fail("添加失败，商品已存在")
                     }
               });
             }
@@ -148,13 +163,12 @@
           },
         },
        mounted() {
-        this.preprice = this.goods.price * 2
-        this.monthpay = parseFloat(this.goods.price / 12).toFixed(2)
         this.$ajax.getGoodsById(this.goodsId).then(
           res => {        
             if(res.code == 100) {      
               this.goods = res.data;   
-              console.log(res);
+              this.preprice = this.goods.price * 2
+              this.monthpay = parseFloat(this.goods.price / 12).toFixed(2)
           }
           else {
               console.log(res);
@@ -175,22 +189,17 @@
     overflow: auto;
   }
   .price{
-    float: left;
     color: red;
     height: 3vh;
     font-size: 1em;
     margin-left: 0.3em;
   }
   .preprice{
-    float: left;
     font-size: 0.7em;
     text-decoration:line-through;
     height: 3vh;
     padding-top: 0.5em;
     margin-left: 0.4em;
-  }
-  .clearfix{
-    clear: both;
   }
   .monthpay{
     text-align: left;
