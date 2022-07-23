@@ -12,8 +12,8 @@ public class GoodsService {
     @Autowired
     GoodsMapper goodsMapper;
 
-    public List<Goods> getGoodsById(Integer id) {
-        return goodsMapper.getGoodsById(id);
+    public Goods getGoodsById(Integer goodsId) {
+        return goodsMapper.getGoodsById(goodsId);
     }
 
     public Goods[] getAllGoods() {

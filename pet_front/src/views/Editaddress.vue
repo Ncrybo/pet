@@ -9,6 +9,11 @@
         :area-columns-placeholder="['请选择', '请选择', '请选择']"
         @save="onSave"
         @delete="onDelete"
+        :address-info="{
+            name: info.name,
+            tel: info.tel,
+            addressDetail: info.address,
+          }"
      />
     </div>
 </template>
@@ -19,24 +24,35 @@ import { Toast } from 'vant';
 export default {
     data() {
         return {
-        areaList,
-        address:"",
-        uid:window.localStorage.getItem("uid"),
+            areaList,
+            id:this.$route.query.id,
+            info:[],
         };
+    },
+    mounted() {
+        this.$ajax.getAddressById(this.id).then(
+        res => {        
+            if(res.code == 100) {      
+            this.info = res.data;   
+        }
+        else {
+            console.log(res);
+        }
+        })
     },
     methods: {
         undo(){
             this.$router.go(-1);
         },
         onSave(content) {
-            this.address = content.city + content.province + content.county + content.addressDetail    
+            let address = content.city + content.province + content.county + content.addressDetail    
             Toast('save success')
-            this.$ajax.editAddress(this.uid,content.name,this.address,content.tel,3)
+            this.$ajax.editAddress(content.name,address,content.tel,this.id)
             this.$router.push({path:"/address"})
         },
         onDelete() {
             Toast('delete success')
-            this.$ajax.detAddress(3)
+            this.$ajax.detAddress(this.id)
             this.$router.push({path:"/address"})
         },
     },

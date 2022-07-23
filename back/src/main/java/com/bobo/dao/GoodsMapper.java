@@ -8,8 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface GoodsMapper {
-    @Select("select * from goods where goods_id = #{id}")
-    public List<Goods> getGoodsById(Integer id);
+    @Select("select * from goods where goods_id = #{goodsId}")
+    public Goods getGoodsById(Integer goodsId);
 
     @Select("select * from goods")
     public Goods[] getAllGoods();

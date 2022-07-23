@@ -24,7 +24,7 @@
       <van-card
       style="width: 300px;"
       :price="obj.price"
-      :desc="obj.describe"
+      :desc="obj.describes"
       :title="obj.goodsName"
       :thumb="obj.img"
     >
@@ -82,10 +82,10 @@ export default {
       },
       det(obj,id,index){
         this.shops[id].list.splice(index,1);
+        this.$ajax.detCart(obj.id);
         if(this.shops[id].list.length === 0)
         {
             this.shops.splice(id,1);
-            this.$ajax.detCart(obj.id);
         }
       },
       increase(obj){

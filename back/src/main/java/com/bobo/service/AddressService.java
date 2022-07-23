@@ -16,7 +16,9 @@ public class AddressService {
 
     public List<Address> getAddress(Integer uid){return addressMapper.getAddress(uid);}
 
+    public Address getAddressById(Integer id){return addressMapper.getAddressById(id);}
+
     public void addAddress(Integer uid,String name,String address,String tel){addressMapper.addAddress(uid,name,address,tel);}
 
-    public void editAddress(Integer uid,String name,String address,String tel,Integer id){addressMapper.editAddress(uid,name,address,tel,id);}
+    public void editAddress(String name,String address,String tel,Integer id){addressMapper.editAddress(name,address,tel,id);}
 }

@@ -11,6 +11,6 @@ public class Goods implements Serializable {
     private String shopName;
     private String img;
     private Double price;
-    private String describe;
+    private String describes;
     private String type;
 }

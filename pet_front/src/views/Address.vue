@@ -44,7 +44,7 @@
                 this.$router.push({path:"/addaddress"})
             },
             onEdit(item) {
-                this.$router.push({path:"/editaddress", query: { id: item.id} })
+                this.$router.push('/editaddress?id=' + item.id);
             },
         },
 };
