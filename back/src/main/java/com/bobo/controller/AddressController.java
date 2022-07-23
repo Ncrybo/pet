@@ -28,17 +28,20 @@ public class AddressController {
     }
 
     @PostMapping("/addAddress/{uid}/{name}/{address}/{tel}")
-    public void addAddress(@PathVariable("uid")Integer uid,@PathVariable("name")String name,@PathVariable("address")String address,@PathVariable("tel")String tel){
+    public Result addAddress(@PathVariable("uid")Integer uid,@PathVariable("name")String name,@PathVariable("address")String address,@PathVariable("tel")String tel){
         addressService.addAddress(uid,name,address,tel);
+        return Result.succeed("添加成功",1);
     }
 
     @PostMapping("/editAddress")
-    public void editAddress(@RequestParam("name")String name,@RequestParam("address")String address,@RequestParam("tel")String tel,@RequestParam("id")Integer id){
+    public Result editAddress(@RequestParam("name")String name,@RequestParam("address")String address,@RequestParam("tel")String tel,@RequestParam("id")Integer id){
         addressService.editAddress(name,address,tel,id);
+        return Result.succeed("修改成功",1);
     }
 
     @PostMapping("/detAddress")
-    public void detAddress(@RequestParam("id") Integer id){
+    public Result detAddress(@RequestParam("id") Integer id){
         addressService.detAddress(id);
+        return Result.succeed("删除成功",1);
     }
 }

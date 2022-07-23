@@ -44,29 +44,32 @@ public class CartController {
     }
 
     @PostMapping("/addCart/{uid}/{gid}")
-    public Integer addCart(@PathVariable("uid") Integer uid,@PathVariable("gid") Integer gid){
+    public Result addCart(@PathVariable("uid") Integer uid,@PathVariable("gid") Integer gid){
         Cart[] cartList = cartService.findCartRepeat(uid,gid);
         if(cartList.length == 0) {
             cartService.addCart(uid, gid);
-            return 1;     //1表示添加成功
+            return Result.succeed("添加成功",1);
         }
         else
-            return 0;     //0表示商品已存在，不添加
+            return Result.succeed("商品已存在，不添加",0);
     }
 
     @PostMapping("/detCart/{id}")
-    void detCart(@PathVariable("id") Integer id){
+    public Result detCart(@PathVariable("id") Integer id){
         cartService.detCart(id);
+        return Result.succeed("删除成功",1);
     }
 
     @PostMapping("/addCount/{id}")
-    void addCount(@PathVariable("id") Integer id){
+    public Result addCount(@PathVariable("id") Integer id){
         cartService.addCount(id);
+        return Result.succeed("商品+1成功",1);
     }
 
     @PostMapping("/downCount/{id}")
-    void downCount(@PathVariable("id") Integer id){
+    public Result downCount(@PathVariable("id") Integer id){
         cartService.downCount(id);
+        return Result.succeed("商品-1成功",1);
     }
 
 }

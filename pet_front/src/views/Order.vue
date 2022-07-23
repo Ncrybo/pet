@@ -126,42 +126,42 @@ export default {
           desc:"测试商品1",
           shop:"淘宠",
           state:1,
-          img:"/img/hadog.jpg"
+          img:"/images/pet/dog1.jpg"
         },
         {
           price:"99",
           desc:"测试商品2",
           shop:"喵的",
           state:2,
-          img:"/dbImages/cat2.jpg",
+          img:"/images/pet/cat1.jpg"
         },
         {
           price:"99",
           desc:"测试商品3",
           shop:"淘宠",
           state:2,
-          img:"/img/baocat.jpg",
+          img:"/images/pet/cat2.jpg",
         },
         {
           price:"101",
           desc:"测试商品4",
           shop:"淘宠",
           state:3,
-          img:"/img/lancat.jpg",
+          img:"/images/pet/cat3.jpg"
         },
         {
           price:"122",
           desc:"测试商品5",
           shop:"淘宠",
           state:4,
-          img:"/img/sadog.jpg",
+          img:"/images/pet/cat4.jpg"
         },
         {
           price:"100",
           desc:"测试商品6",
           shop:"淘宠",
           state:5,
-          img:"/img/hadog.jpg",
+          img:"/images/pet/dog2.jpg"
         },
       ],
     }
