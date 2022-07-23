@@ -22,7 +22,7 @@
     </div>
     <!--正文-->
     <div class="body">
-        <div class="petimg"><img src="/images/pet/cat1.jpg" alt="" style="width: 100%; height:50vh"></div>
+        <div class="petimg"><img :src="goods.img" alt="" style="width: 100%; height:50vh"></div>
         <div class="price">￥{{goods.price}}</div><div class="preprice">￥{{preprice}}&nbsp<van-icon name="question-o" /></div>
         <div class="clearfix"></div>
         <div class="monthpay">支持分期|最低月付{{monthpay}}元</div>
@@ -70,7 +70,7 @@
         <van-goods-action-icon icon="chat-o" text="客服" dot />
         <van-goods-action-icon icon="cart-o" text="购物车" badge="5" />
         <van-goods-action-icon icon="shop-o" text="店铺" badge="12" />
-        <van-goods-action-button type="warning" text="加入购物车" />
+        <van-goods-action-button type="warning" text="加入购物车" @click="addCart"/>
         <van-goods-action-button type="danger" text="立即购买" />
       </van-goods-action>
     </div>
@@ -84,6 +84,7 @@
         data() {
             return {
               showShare: false,
+              goodsId: this.$route.query.goodsId,
               preprice: 0,
               monthpay: 0,
               options: [
@@ -113,17 +114,7 @@
                   score:5
                 }
               ],
-              goods:
-                {
-                  goodsId: 1,
-                  goodsName: "英短金渐长",
-                  shopName: "喵的",
-                  img: "/dbImages/cat2.jpg",
-                  price: "2500",
-                  describes: "暂无",
-                  type: "pet",
-                }
-              ,
+              goods:[],
             }
         },
         methods: {
@@ -135,19 +126,40 @@
             Toast(option.name);
             this.showShare = false;
           },
+          addCart(){
+            let uid = window.localStorage.getItem("uid")
+            let token = window.localStorage.getItem('token');
+            if (token) {
+              this.$ajax.addCart(uid,this.goodsId).then(
+                res => {        
+                    if(res)
+                    {
+                      alert("添加购物车成功")
+                    }    
+                    else
+                    {
+                      alert("添加失败，商品已存在")
+                    }
+              });
+            }
+            else{
+              alert("请先登录")
+            }
+          },
         },
        mounted() {
         this.preprice = this.goods.price * 2
         this.monthpay = parseFloat(this.goods.price / 12).toFixed(2)
-/*         this.$ajax.getGoodsById(1).then(
+        this.$ajax.getGoodsById(this.goodsId).then(
           res => {        
             if(res.code == 100) {      
-              this.shops = res.data;   
+              this.goods = res.data;   
+              console.log(res);
           }
           else {
               console.log(res);
           }
-        })*/
+        })
       },
 
     }

@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     url: jdbc:mysql://121.4.172.43:3306/petapp?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
-    username: root
+    username: pet
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 

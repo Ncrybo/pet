@@ -106,16 +106,22 @@ export default {
     },
 
     detAddress(id){
-        return instance.post('/detAddress/'+id)
+        return instance.post('/detAddress?id='+id)
     },
     getAddress(uid){
         return instance.post('/getAddress/'+uid)
     },
+    getAddressById(id){
+        return instance.post('/getAddressById?id='+id)
+    },
     addAddress(uid,name,address,tel){
         return instance.post('/addAddress/'+uid+'/'+name+'/'+address+'/'+tel)
     },
-    editAddress(uid,name,address,tel,id){
-        return instance.post('/editAddress/'+uid+'/'+name+'/'+address+'/'+tel+'/'+id)
+    editAddress(name,address,tel,id){
+        return instance.post('/editAddress?name='+name+'&address='+address+'&tel='+tel+'&id='+id)
+    },
+    getGoodsById(goodsId){
+        return instance.post('/getGoodsById?goodsId='+goodsId)
     },
 
     //李炜东

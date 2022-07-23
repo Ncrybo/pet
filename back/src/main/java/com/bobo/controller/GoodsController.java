@@ -5,10 +5,7 @@ import com.bobo.entity.Goods;
 import com.bobo.entity.Result;
 import com.bobo.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,8 +23,8 @@ public class GoodsController {
     }
 
     @PostMapping("/getGoodsById")
-    public List<Goods> getGoodsById(Integer id) {
-        return goodsService.getGoodsById(id);
+    public Result getGoodsById(@RequestParam("goodsId") Integer goodsId) {
+        return Result.succeed("返回当前商品信息",goodsService.getGoodsById(goodsId));
     }
 
     @GetMapping("/getTreePet")

@@ -15,5 +15,5 @@ public class Cart  implements Serializable {
     private String shopName;
     private String img;
     private Double price;
-    private String describe;
+    private String describes;
 }
