@@ -1,7 +1,7 @@
 <template>
   <div class="cart">
     <div class="nav">
-      <van-nav-bar title="购物车" left-text="返回" :fixed="true" left-arrow>
+      <van-nav-bar title="购物车" left-text="返回" :fixed="true" left-arrow  @click-left="undo">
         <template #right>
           <van-icon name="search" size="18" />
         </template>
@@ -74,6 +74,9 @@ export default {
       },
 
     methods: {
+      undo(){
+        this.$router.go(-1);
+      },
       checkAll() {
           if(this.checked)
               this.$refs.checkboxGroup.toggleAll(true);
@@ -95,7 +98,7 @@ export default {
         }
         else{
           obj.count++;
-          this.$ajax.addCount(obj.id);
+          this.$ajax.addCount(obj.id)
           this.setTotalPrice();
         }
       },

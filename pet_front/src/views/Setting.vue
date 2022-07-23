@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="header">
-             <van-nav-bar left-arrow  @click-left="undo()" title="设置"/>
+             <van-nav-bar left-arrow  @click-left="undo" title="设置"/>
         </div>
         <div class="shezhi">
             <br>
