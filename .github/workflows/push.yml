@@ -103,7 +103,8 @@ jobs:
         run: ps -ef | grep back.jar | grep -v grep | awk '{print $2}' | xargs kill -9
 
       - name: 运行现有的jar包
-        run: nohup java -jar back.jar &
-      - run: pwd
+        run: |
+          nohup java -jar back.jar &
+          pwd
 
 
