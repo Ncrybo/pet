@@ -105,6 +105,6 @@ jobs:
       - name: 运行现有的jar包
         run: |
           nohup java -jar back.jar &
-          pwd
+          
 
 
