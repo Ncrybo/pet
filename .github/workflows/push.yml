@@ -99,11 +99,8 @@ jobs:
         working-directory: /www/pet
 
     steps:
-      - name: 停止现运行的jar包
-        run: ps -ef | grep back.jar | grep -v grep | awk '{print $2}' | xargs kill -9
-
-      - name: 运行现有的jar包
-        run: nohup java -jar back.jar &
+      - name: 运行shell脚本
+        run: ./run_back
           
 
 
