@@ -99,7 +99,7 @@ jobs:
         working-directory: /www/pet
 
     steps:
-      - name: 运行shell脚本
+      - name: 运行shell脚本.
         run: ./run_back
           
 
