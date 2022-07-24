@@ -114,11 +114,11 @@ export default {
     getAddressById(id){
         return instance.post('/getAddressById?id='+id)
     },
-    addAddress(uid,name,address,tel){
-        return instance.post('/addAddress/'+uid+'/'+name+'/'+address+'/'+tel)
+    addAddress(data){
+        return instance.post('/addAddress', data)
     },
-    editAddress(name,address,tel,id){
-        return instance.post('/editAddress?name='+name+'&address='+address+'&tel='+tel+'&id='+id)
+    editAddress(data){
+        return instance.post('/editAddress', data)
     },
     getGoodsById(goodsId){
         return instance.post('/getGoodsById?goodsId='+goodsId)
