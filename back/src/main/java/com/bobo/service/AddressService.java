@@ -18,7 +18,11 @@ public class AddressService {
 
     public Address getAddressById(Integer id){return addressMapper.getAddressById(id);}
 
-    public void addAddress(Integer uid,String name,String address,String tel){addressMapper.addAddress(uid,name,address,tel);}
+    public Address getUserDefault(Integer uid){return addressMapper.getUserDefault(uid);}
 
-    public void editAddress(String name,String address,String tel,Integer id){addressMapper.editAddress(name,address,tel,id);}
+    public void updUserDefault(Integer id){addressMapper.updUserDefault(id);}
+
+    public void addAddress(Address address){addressMapper.addAddress(address);}
+
+    public void editAddress(Address address){addressMapper.editAddress(address);}
 }

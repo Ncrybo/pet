@@ -49,3 +49,10 @@
         },
 };
 </script>
+
+<style scoped>
+    .dizhi{
+        height: calc(100vh - 40px - 46px);
+        overflow: auto;
+    }
+</style>
