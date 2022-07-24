@@ -9,4 +9,5 @@ public class Address {
     String name;
     String address;
     String tel;
+    Boolean isDefault;
 }

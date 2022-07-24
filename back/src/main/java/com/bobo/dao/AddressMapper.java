@@ -13,11 +13,17 @@ public interface AddressMapper {
     @Select("select * from useraddress where id = #{id}")
     Address getAddressById(Integer id);
 
-    @Insert("insert into useraddress(uid,name,address,tel) values(#{uid},#{name},#{address},#{tel})")
-    void addAddress(Integer uid,String name,String address,String tel);
+    @Select("select * from useraddress where isDefault = 1 and uid = #{uid}")
+    Address getUserDefault(Integer uid);
 
-    @Update({"update useraddress set name=#{name},address=#{address},tel=#{tel} where id=#{id}"})
-    void editAddress(String name,String address,String tel,Integer id);
+    @Update({"update useraddress set isDefault = 0 where id=#{id}"})
+    void updUserDefault(Integer id);
+
+    @Insert("insert into useraddress(uid,name,address,tel,isDefault) values(#{uid},#{name},#{address},#{tel},#{isDefault})")
+    void addAddress(Address address);
+
+    @Update({"update useraddress set name=#{name},address=#{address},tel=#{tel},isDefault=#{isDefault} where id=#{id}"})
+    void editAddress(Address address);
 
     @Delete("delete from useraddress where id = #{id}")
     void detAddress(Integer id);
