@@ -92,7 +92,7 @@ jobs:
   run_jar:
     name: 执行jar包
     # needs: build_back
-    runs-on: [self-hosted, linux, x64]
+    runs-on: [self-hosted, linux, bolabel]
     defaults:
       run:
         shell: shell
