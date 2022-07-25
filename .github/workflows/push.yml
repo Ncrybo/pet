@@ -99,10 +99,10 @@ jobs:
         working-directory: /www/pet/
 
     steps:
-      - name: 运行shell脚本.
-        run: ./run_back
-      # - name: 测试环境
-      #   run: systemctl status nginx
+      # - name: 运行shell脚本.
+      #   run: ./run_back
+      - name: 测试环境
+        run: systemctl status nginx
           
 
 
