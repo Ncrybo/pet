@@ -89,22 +89,22 @@ jobs:
           TARGET: '/www/pet'
       
 
-  run_jar:
-    name: 执行jar包
-    needs: build_back
-    runs-on: [self-hosted]
-    defaults:
-      run:
-        shell: shell
-        working-directory: /www/pet/
+  # run_jar:
+  #   name: 执行jar包
+  #   needs: build_back
+  #   runs-on: [self-hosted]
+  #   defaults:
+  #     run:
+  #       shell: shell
+  #       working-directory: /www/pet/
 
-    steps:
-      - name: 运行shell脚本.
-        run: ./run_back
-      # - name: 查看目录
-      #   run: pwd
-      # - name: 测试环境
-      #   run: systemctl status nginx
+  #   steps:
+  #     - name: 运行shell脚本.
+  #       run: ./run_back
+  #     # - name: 查看目录
+  #     #   run: pwd
+  #     # - name: 测试环境
+  #     #   run: systemctl status nginx
           
 
 
