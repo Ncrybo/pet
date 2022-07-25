@@ -78,7 +78,7 @@ jobs:
       
   run_jar:
     name: 执行jar包
-    needs: build_back
+    # needs: build_back
     runs-on: [self-hosted, Linux, x64]
     defaults:
       run:
