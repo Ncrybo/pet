@@ -51,42 +51,42 @@ jobs:
   #         TARGET: '/www/pet'
 
 
-  # build_back:
-  #   name: 打包后端
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #       working-directory: ./back
-  #   steps:
-  #     - name: 签出代码
-  #       uses: actions/checkout@main
+  build_back:
+    name: 打包后端
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./back
+    steps:
+      - name: 签出代码
+        uses: actions/checkout@main
 
-  #     - name: 安装JDK
-  #       uses: actions/setup-java@v3.4.1
-  #       with: 
-  #         java-version: '11'
-  #         distribution: 'temurin'
-  #         cache: maven
+      - name: 安装JDK
+        uses: actions/setup-java@v3.4.1
+        with: 
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
 
-  #     - name: 打包maven
-  #       run: mvn -B package --file pom.xml
+      - name: 打包maven
+        run: mvn -B package --file pom.xml
 
-  #     - name: ssh连接服务器并上传文件
-  #       uses: easingthemes/ssh-deploy@v2.2.11
-  #       with:
-  #         # Private Key
-  #         SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-  #         # Remote host
-  #         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-  #         # Remote user
-  #         REMOTE_USER: 'root'
-  #         # Remote port
-  #         REMOTE_PORT: 22
-  #         # Source directory
-  #         SOURCE: 'back/target/back.jar'
-  #         # Target directory
-  #         TARGET: '/www/pet'
+      - name: ssh连接服务器并上传文件
+        uses: easingthemes/ssh-deploy@v2.2.11
+        with:
+          # Private Key
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          # Remote host
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          # Remote user
+          REMOTE_USER: 'root'
+          # Remote port
+          REMOTE_PORT: 22
+          # Source directory
+          SOURCE: 'back/target/back.jar'
+          # Target directory
+          TARGET: '/www/pet'
       
 
   run_jar:
