@@ -96,7 +96,7 @@ jobs:
     defaults:
       run:
         shell: shell
-        working-directory: /www/pet
+        working-directory: /www/pet/
 
     steps:
       - name: 运行shell脚本.
