@@ -35,10 +35,13 @@
         </div>
      
         <div class="monthpay">支持分期|最低月付{{monthpay}}元</div>
-        <div class="title">{{goods.goodsName}}&nbsp&nbsp
-          <van-tag type="primary">公</van-tag>&nbsp
-          <van-tag color="Silver " text-color="darkslategray">未绝育</van-tag>&nbsp
-          <van-tag color="Silver " text-color="darkslategray">宠物级</van-tag>
+        <div>
+          <van-row gutter="10">
+            <van-col class="title">{{goods.goodsName}}</van-col>
+            <van-col class="tags"><van-tag type="primary">公</van-tag></van-col>
+            <van-col class="tags"><van-tag color="Silver " text-color="darkslategray">未绝育</van-tag></van-col>
+            <van-col class="tags"><van-tag color="Silver " text-color="darkslategray">宠物级</van-tag></van-col>
+          </van-row>
         </div>
         <van-divider />
         <div class="texts">品相&nbsp&nbsp<van-tag type="warning">大骨架</van-tag>&nbsp&nbsp<van-tag type="warning">爆毛</van-tag></div>
@@ -211,6 +214,9 @@
     font-weight: bold;
     font-size: 1.1em;
     margin-left: 0.4em;
+  }
+  .tags{
+    margin-top: 2px;
   }
   .texts{
     font-size: 0.8em;
