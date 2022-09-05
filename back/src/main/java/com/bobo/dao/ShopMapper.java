@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface ShopMapper {
-    @Select("select * from shop where shop_name = #{name}")
+    @Select("select * from shop_info where shop_name = #{name}")
     public Shop getByName(String name);
 
-    @Select("select * from shop")
+    @Select("select * from shop_info")
     public Shop[] getAllShop();
 }

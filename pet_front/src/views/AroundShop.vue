@@ -11,12 +11,12 @@
       <div class="shop-card" v-for="item in shops" :key="item.shopName">
         <!--附近商店页中的 商店卡片-->
         <div class="avatar" @click="toShop(item.shopName)">
-          <img :src="item.img"  alt="" />
+          <img :src="item.shopImg"  alt="" />
         </div>
         <div class="shopName" @click="toShop(item.shopName)"><strong>{{item.shopName}}</strong></div>
         <div class="pingfen">
           <van-rate
-            v-model="item.star"
+            v-model="item.shopStar"
             size="10"
             allow-half
             void-icon="star"
@@ -25,7 +25,7 @@
             :readonly="true"
           />
         </div>
-        <div class="address">{{item.province+item.city+item.street}}</div>
+        <div class="address">{{item.shopProvince+item.shopCity+item.shopStreet}}</div>
         <div class="petImg">
           <div class="imgItem">
             <div class="img">

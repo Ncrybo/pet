@@ -7,9 +7,9 @@ import java.io.Serializable;
 @Data
 public class Shop implements Serializable {
     private String shopName;
-    private String img;
-    private double star;
-    private String province;
-    private String city;
-    private String street;
+    private String shopImg;
+    private double shopStar;
+    private String shopProvince;
+    private String shopCity;
+    private String shopStreet;
 }
