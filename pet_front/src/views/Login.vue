@@ -45,7 +45,7 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      id: "小明",
+      username: "小明",
       password: "123456",
       checked: false,
       saveDisable: true,
@@ -77,7 +77,7 @@ export default {
 
     login() {
       this.$ajax
-        .login({ uname: this.id, psw: this.password })
+        .login({ uname: this.username, psw: this.password })
         .then((res) => {
           if (res.code === 100) {
             this.successLogin(res);
