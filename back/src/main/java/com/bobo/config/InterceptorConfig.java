@@ -29,6 +29,8 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
         ret.add("/getTreePet");
         ret.add("/getShopInfo");
         ret.add("/checkGoods");
+        ret.add("/HomeView");
+        ret.add("/shop_comment");
 
         return ret;
     }

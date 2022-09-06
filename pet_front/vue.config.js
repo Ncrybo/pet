@@ -4,6 +4,8 @@ module.exports = defineConfig({
   lintOnSave: false,
 
   devServer: {
+    host: 'localhost',
+    open: true,
     proxy: {
       '/huawei': {
         target: 'https://oauth-login.cloud.huawei.com',
