@@ -11,10 +11,11 @@
           v-for="(item,index) in list" 
           v-if="(item.status > -1)"
           :key="index"
-          :price="item.totalprice"
+          :price="item.totalPrice"
           :desc="item.describes"
           :title="item.shopName"
           :thumb="item.img"
+          :num="item.productCount"
         >
         <template #tags >
           <van-tag v-if="(item.status == 0)" plain type="danger">等待付款</van-tag>
@@ -48,10 +49,11 @@
           v-for="(item,index) in list"
           v-if="(item.status == 0)" 
           :key="index"
-          :price="item.totalprice"
+          :price="item.totalPrice"
           :desc="item.describes"
           :title="item.shopName"
           :thumb="item.img"
+          :num="item.productCount"
         >
         <template #tags>
           <van-tag plain type="danger">等待付款</van-tag>
@@ -68,10 +70,11 @@
           v-for="(item,index) in list" 
           v-if="(item.status == 1)" 
           :key="index"
-          :price="item.totalprice"
+          :price="item.totalPrice"
           :desc="item.describes"
           :title="item.shopName"
           :thumb="item.img"
+          :num="item.productCount"
         >
         <template #tags>
           <van-tag plain type="danger">买家已付款</van-tag>
@@ -88,10 +91,11 @@
           v-for="(item,index) in list" 
           v-if="(item.status == 2)" 
           :key="index"
-          :price="item.totalprice"
+          :price="item.totalPrice"
           :desc="item.describes"
           :title="item.shopName"
           :thumb="item.img"
+          :num="item.productCount"
         >
         <template #tags>
           <van-tag plain type="danger">卖家已发货</van-tag>
@@ -108,10 +112,11 @@
           v-for="(item,index) in list" 
           v-if="(item.status == 3)" 
           :key="index"
-          :price="item.totalprice"
+          :price="item.totalPrice"
           :desc="item.describes"
           :title="item.shopName"
           :thumb="item.img"
+          :num="item.productCount"
         >
         <template #tags>
           <van-tag plain type="danger">交易成功</van-tag>
@@ -128,10 +133,11 @@
           v-for="(item,index) in list" 
           v-if="(item.status == 4)" 
           :key="index"
-          :price="item.totalprice"
+          :price="item.totalPrice"
           :desc="item.describes"
           :title="item.shopName"
           :thumb="item.img"
+          :num="item.productCount"
         >
         <template #tags>
           <van-tag plain type="danger">退款成功</van-tag>
