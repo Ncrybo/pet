@@ -2,7 +2,7 @@ import axios from "axios"
 
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.defaults.baseURL = 'http://121.4.172.43:18083';
+axios.defaults.baseURL = 'http://localhost:18083';
 let instance = axios.create({});
 /*
     请求拦截器， 每个请求都带上token
@@ -122,6 +122,15 @@ export default {
     },
     getGoodsById(goodsId){
         return instance.post('/getGoodsById?goodsId='+goodsId)
+    },
+    getOrders(uid){
+        return instance.post('/getOrders/'+uid)
+    },
+    updStatus(status,id){
+        return instance.post('/updStatus/'+status+'/'+id)
+    },
+    detOrder(id){
+        return instance.post('/detOrder/'+id)
     },
 
     //李炜东

@@ -9,16 +9,36 @@
         <van-tab title="全部">
           <van-card
           v-for="(item,index) in list" 
+          v-if="(item.status > -1)"
           :key="index"
-          :price="item.price"
-          :desc="item.desc"
-          :title="item.shop"
+          :price="item.totalprice"
+          :desc="item.describes"
+          :title="item.shopName"
           :thumb="item.img"
         >
+        <template #tags >
+          <van-tag v-if="(item.status == 0)" plain type="danger">等待付款</van-tag>
+          <van-tag v-if="(item.status == 1)" plain type="danger">买家已支付</van-tag>
+          <van-tag v-if="(item.status == 2)" plain type="danger">卖家已发货</van-tag>
+          <van-tag v-if="(item.status == 3)" plain type="danger">交易成功</van-tag>
+          <van-tag v-if="(item.status == 4)" plain type="danger">退款成功</van-tag>
+        </template>
         <template #footer>
-          <van-button size="mini" @click="look(item)">查看状态</van-button>
-          <van-button size="mini" @click="rebuy(item)">再次购买</van-button>
-          <van-button size="mini" @click="det(index)">删除</van-button>
+          <van-button v-if="(item.status == 0)" size="mini" @click="cancel(item)">取消订单</van-button>
+          <van-button v-if="(item.status == 0)" size="mini" @click="buy(item)">继续付款</van-button>
+
+          <van-button v-if="(item.status == 1)" size="mini" @click="exit(item)">申请退款</van-button>
+          <van-button v-if="(item.status == 1)" size="mini">修改地址</van-button>
+
+          <van-button v-if="(item.status == 2)" size="mini" @click="got(item)">确认收货</van-button>
+          <van-button v-if="(item.status == 2)" size="mini" @click="exit(item)">申请售后</van-button>
+
+          <van-button v-if="(item.status == 3)" size="mini" @click="rebuy(item)">再次购买</van-button>
+          <van-button v-if="(item.status == 3)" size="mini" @click="evaluate(item)">评价</van-button>
+
+          <van-button v-if="(item.status == 4)" size="mini" @click="rebuy(item)">再次购买</van-button>
+          <van-button v-if="(item.status == 4)" size="mini" @click="det(item)">删除</van-button>
+
         </template>
       </van-card>
         </van-tab>
@@ -26,16 +46,19 @@
         <van-tab title="待付款"> 
           <van-card
           v-for="(item,index) in list"
-          v-if="(item.state == 1)" 
+          v-if="(item.status == 0)" 
           :key="index"
-          :price="item.price"
-          :desc="item.desc"
-          :title="item.shop"
+          :price="item.totalprice"
+          :desc="item.describes"
+          :title="item.shopName"
           :thumb="item.img"
         >
+        <template #tags>
+          <van-tag plain type="danger">等待付款</van-tag>
+        </template>
         <template #footer>
-          <van-button size="mini" @click="buy(item)">付款</van-button>
-          <van-button size="mini" @click="cancel(item)">取消</van-button>
+          <van-button size="mini" @click="cancel(item)">取消订单</van-button>
+          <van-button size="mini" @click="buy(item)">继续付款</van-button>
         </template>
         </van-card>
         </van-tab>
@@ -43,16 +66,19 @@
         <van-tab title="待发货"> 
           <van-card
           v-for="(item,index) in list" 
-          v-if="(item.state == 2)" 
+          v-if="(item.status == 1)" 
           :key="index"
-          :price="item.price"
-          :desc="item.desc"
-          :title="item.shop"
+          :price="item.totalprice"
+          :desc="item.describes"
+          :title="item.shopName"
           :thumb="item.img"
         >
+        <template #tags>
+          <van-tag plain type="danger">买家已付款</van-tag>
+        </template>
         <template #footer>
-          <van-button size="mini" @click="deliver(item)">发货</van-button>
-          <van-button size="mini" @click="exit(item)">退单</van-button>
+          <van-button size="mini" @click="exit(item)">申请退款</van-button>
+          <van-button size="mini">修改地址</van-button>
         </template>
         </van-card>
         </van-tab>
@@ -60,16 +86,19 @@
         <van-tab title="待收货"> 
           <van-card
           v-for="(item,index) in list" 
-          v-if="(item.state == 3)" 
+          v-if="(item.status == 2)" 
           :key="index"
-          :price="item.price"
-          :desc="item.desc"
-          :title="item.shop"
+          :price="item.totalprice"
+          :desc="item.describes"
+          :title="item.shopName"
           :thumb="item.img"
         >
+        <template #tags>
+          <van-tag plain type="danger">卖家已发货</van-tag>
+        </template>
         <template #footer>
           <van-button size="mini" @click="got(item)">确认收货</van-button>
-          <van-button size="mini" @click="exit(item)">退单</van-button>
+          <van-button size="mini" @click="exit(item)">申请售后</van-button>
         </template>
         </van-card>
         </van-tab>
@@ -77,17 +106,19 @@
         <van-tab title="待评价"> 
           <van-card
           v-for="(item,index) in list" 
-          v-if="(item.state == 4)" 
+          v-if="(item.status == 3)" 
           :key="index"
-          :price="item.price"
-          :desc="item.desc"
-          :title="item.shop"
+          :price="item.totalprice"
+          :desc="item.describes"
+          :title="item.shopName"
           :thumb="item.img"
         >
+        <template #tags>
+          <van-tag plain type="danger">交易成功</van-tag>
+        </template>
         <template #footer>
           <van-button size="mini" @click="rebuy(item)">再次购买</van-button>
           <van-button size="mini" @click="evaluate(item)">评价</van-button>
-          <van-button size="mini" @click="det(index)">删除</van-button>
         </template>
         </van-card>
         </van-tab>
@@ -95,16 +126,19 @@
         <van-tab title="退款">
           <van-card
           v-for="(item,index) in list" 
-          v-if="(item.state == 5)" 
+          v-if="(item.status == 4)" 
           :key="index"
-          :price="item.price"
-          :desc="item.desc"
-          :title="item.shop"
+          :price="item.totalprice"
+          :desc="item.describes"
+          :title="item.shopName"
           :thumb="item.img"
         >
+        <template #tags>
+          <van-tag plain type="danger">退款成功</van-tag>
+        </template>
         <template #footer>
           <van-button size="mini" @click="rebuy(item)">再次购买</van-button>
-          <van-button size="mini" @click="det(index)">删除</van-button>
+          <van-button size="mini" @click="det(item)">删除</van-button>
         </template>
       </van-card>
         </van-tab>
@@ -120,104 +154,80 @@ export default {
   data() {
     return {
       active:0,
-      list:[
-        {
-          price:"100",
-          desc:"测试商品1",
-          shop:"淘宠",
-          state:1,
-          img:"/images/pet/dog1.jpg"
-        },
-        {
-          price:"99",
-          desc:"测试商品2",
-          shop:"喵的",
-          state:2,
-          img:"/images/pet/cat1.jpg"
-        },
-        {
-          price:"99",
-          desc:"测试商品3",
-          shop:"淘宠",
-          state:2,
-          img:"/images/pet/cat2.jpg",
-        },
-        {
-          price:"101",
-          desc:"测试商品4",
-          shop:"淘宠",
-          state:3,
-          img:"/images/pet/cat3.jpg"
-        },
-        {
-          price:"122",
-          desc:"测试商品5",
-          shop:"淘宠",
-          state:4,
-          img:"/images/pet/cat4.jpg"
-        },
-        {
-          price:"100",
-          desc:"测试商品6",
-          shop:"淘宠",
-          state:5,
-          img:"/images/pet/dog2.jpg"
-        },
-      ],
+      uid:window.localStorage.getItem("uid"),
+      list:[],
     }
   },
 
   mounted() {
       this.active=this.$route.query.id;
+      this.$ajax.getOrders(this.uid).then(
+          res => {        
+            if(res.code == 100) {      
+              this.list = res.data;   
+              console.log(res);
+          }
+          else {
+              console.log(res);
+          }
+      })
   },
   methods:{
       undo(){
           this.$router.go(-1);
       },
-      look(item){
-        if(item.state == 1)
-          Dialog({ message: '待付款' });
-        else if(item.state == 2)
-          Dialog({ message: '待发货' });
-        else if(item.state == 3)
-          Dialog({ message: '待收货' });
-        else if(item.state == 4)
-          Dialog({ message: '待评价' });
-        else if(item.state == 5)
-          Dialog({ message: '退款' });
-        else
-          Dialog({ message: '已取消/已完成' });
-      },
       rebuy(item){
-        item.state = 1    //再次购买
-        Dialog({ message: '已添加到待付款' });
+        this.$ajax.updStatus(0,item.id).then(
+            res => {  
+              if(res.data == 1) {      
+              Dialog({ message: '已添加到待付款' });
+            }   
+        })
       },
-      buy(item){
-        item.state = 2    //付款
-        Dialog({ message: '付款成功' });
+      buy(item){      //付款
+        this.$ajax.updStatus(1,item.id).then(
+            res => {  
+              if(res.data == 1) {      
+              Dialog({ message: '付款成功' });
+            }   
+          })
       },
-      deliver(item){
-        item.state = 3    //发货
-        Dialog({ message: '发货成功' });
+      got(item){    //确认收货
+        this.$ajax.updStatus(3,item.id).then(
+            res => {  
+              if(res.data == 1) {      
+              Dialog({ message: '收货成功' });
+            }   
+      })
       },
-      got(item){
-        item.state = 4    //确认收货
-        Dialog({ message: '收货成功' });
+      exit(item){     //申请退款
+        this.$ajax.updStatus(-3,item.id).then(
+            res => {  
+              if(res.data == 1) {      
+                Dialog({ message: '已申请退款' });
+            }   
+      })
       },
-      exit(item){
-        item.state = 5    //退款
-        Dialog({ message: '退款成功' });
+      evaluate(item){     //评价
+        this.$ajax.updStatus(4,item.id).then(
+            res => {  
+              if(res.data == 1) {      
+              Dialog({ message: '评价成功，订单已完成' });
+            }   
+        })
       },
-      evaluate(item){
-        item.state = 0    //评价成功
-        Dialog({ message: '评价成功，订单已完成' });
+      cancel(item){   //取消订单
+        this.$ajax.updStatus(-1,item.id).then(
+            res => {  
+              if(res.data == 1) {      
+              Dialog({ message: '已申请取消' });
+            }   
+        })
       },
-      cancel(item){
-        item.state = 0    //取消
-        Dialog({ message: '取消成功' });
-      },
-      det(index){
-        this.list.splice(index,1)
+      det(item){
+        this.list.splice(item,1)
+        this.$ajax.detOrder(item.id);
+        Dialog({ message: '记录已删除' });
       },
   },
 
@@ -228,5 +238,10 @@ export default {
 <style scoped>
   .card{
     text-align: left;
+  }
+  .van-tag{
+    position: absolute;
+    margin-left: 200px;
+    margin-top: -40px;
   }
 </style>
