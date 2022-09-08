@@ -58,10 +58,18 @@ const routes = [
       requiresAuth: true
     }
   },
-  {                      //个人主页路由
+  {                      //订单管理路由
     path: "/order",
     name: "order",
     component: () => import("../views/Order.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {                      //订单详情路由
+    path: "/orderdetail",
+    name: "orderdetail",
+    component: () => import("../views/OrderDetail.vue"),
     meta: {
       requiresAuth: true
     }

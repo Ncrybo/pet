@@ -1,10 +1,7 @@
 package com.bobo.dao;
 
 import com.bobo.entity.Order;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -18,4 +15,11 @@ public interface OrderMapper {
 
     @Delete("delete from shop_order where id = #{id}")
     public void delOrder(Integer id);
+
+    @Select("select * from shop_order join shop_goods As goods on shop_order.id = #{id} and goods_id = goods.id join " +
+            "shop_useraddress on address_id = shop_useraddress.id")
+    Order getDetail(Integer id);
+
+    @Insert("insert into shop_order(order_no,goods_id,status,product_count,total_price,address_id " +
+            "user_id,order_time) values(#{},#{},#{},#{},#{},)")
 }

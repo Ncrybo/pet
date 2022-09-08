@@ -13,9 +13,10 @@
           :key="index"
           :price="item.totalPrice"
           :desc="item.describes"
-          :title="item.shopName"
+          :title="item.goodsName"
           :thumb="item.img"
           :num="item.productCount"
+          @click="gotodetail(item)"
         >
         <template #tags >
           <van-tag v-if="(item.status == 0)" plain type="danger">等待付款</van-tag>
@@ -25,20 +26,20 @@
           <van-tag v-if="(item.status == 4)" plain type="danger">退款成功</van-tag>
         </template>
         <template #footer>
-          <van-button v-if="(item.status == 0)" size="mini" @click="cancel(item)">取消订单</van-button>
-          <van-button v-if="(item.status == 0)" size="mini" @click="buy(item)">继续付款</van-button>
+          <van-button v-if="(item.status == 0)" size="mini" @click.stop="cancel(item)">取消订单</van-button>
+          <van-button v-if="(item.status == 0)" size="mini" >继续付款</van-button>
 
-          <van-button v-if="(item.status == 1)" size="mini" @click="exit(item)">申请退款</van-button>
+          <van-button v-if="(item.status == 1)" size="mini" @click.stop="exit(item)">申请退款</van-button>
           <van-button v-if="(item.status == 1)" size="mini">修改地址</van-button>
 
-          <van-button v-if="(item.status == 2)" size="mini" @click="got(item)">确认收货</van-button>
-          <van-button v-if="(item.status == 2)" size="mini" @click="exit(item)">申请售后</van-button>
+          <van-button v-if="(item.status == 2)" size="mini" @click.stop="got(item)">确认收货</van-button>
+          <van-button v-if="(item.status == 2)" size="mini" @click.stop="exit(item)">申请售后</van-button>
 
-          <van-button v-if="(item.status == 3)" size="mini" @click="rebuy(item)">再次购买</van-button>
-          <van-button v-if="(item.status == 3)" size="mini" @click="evaluate(item)">评价</van-button>
+          <van-button v-if="(item.status == 3)" size="mini" @click.stop="rebuy(item)">再次购买</van-button>
+          <van-button v-if="(item.status == 3)" size="mini" @click.stop="evaluate(item)">评价</van-button>
 
-          <van-button v-if="(item.status == 4)" size="mini" @click="rebuy(item)">再次购买</van-button>
-          <van-button v-if="(item.status == 4)" size="mini" @click="det(item)">删除</van-button>
+          <van-button v-if="(item.status == 4)" size="mini" @click.stop="rebuy(item)">再次购买</van-button>
+          <van-button v-if="(item.status == 4)" size="mini" @click.stop="det(item)">删除</van-button>
 
         </template>
       </van-card>
@@ -51,16 +52,17 @@
           :key="index"
           :price="item.totalPrice"
           :desc="item.describes"
-          :title="item.shopName"
+          :title="item.goodsName"
           :thumb="item.img"
           :num="item.productCount"
+          @click="gotodetail(item)"
         >
         <template #tags>
           <van-tag plain type="danger">等待付款</van-tag>
         </template>
         <template #footer>
-          <van-button size="mini" @click="cancel(item)">取消订单</van-button>
-          <van-button size="mini" @click="buy(item)">继续付款</van-button>
+          <van-button size="mini" @click.stop="cancel(item)">取消订单</van-button>
+          <van-button size="mini" >继续付款</van-button>
         </template>
         </van-card>
         </van-tab>
@@ -72,15 +74,16 @@
           :key="index"
           :price="item.totalPrice"
           :desc="item.describes"
-          :title="item.shopName"
+          :title="item.goodsName"
           :thumb="item.img"
           :num="item.productCount"
+          @click="gotodetail(item)"
         >
         <template #tags>
           <van-tag plain type="danger">买家已付款</van-tag>
         </template>
         <template #footer>
-          <van-button size="mini" @click="exit(item)">申请退款</van-button>
+          <van-button size="mini" @click.stop="exit(item)">申请退款</van-button>
           <van-button size="mini">修改地址</van-button>
         </template>
         </van-card>
@@ -93,16 +96,17 @@
           :key="index"
           :price="item.totalPrice"
           :desc="item.describes"
-          :title="item.shopName"
+          :title="item.goodsName"
           :thumb="item.img"
           :num="item.productCount"
+          @click="gotodetail(item)"
         >
         <template #tags>
           <van-tag plain type="danger">卖家已发货</van-tag>
         </template>
         <template #footer>
-          <van-button size="mini" @click="got(item)">确认收货</van-button>
-          <van-button size="mini" @click="exit(item)">申请售后</van-button>
+          <van-button size="mini" @click.stop="got(item)">确认收货</van-button>
+          <van-button size="mini" @click.stop="exit(item)">申请售后</van-button>
         </template>
         </van-card>
         </van-tab>
@@ -114,16 +118,17 @@
           :key="index"
           :price="item.totalPrice"
           :desc="item.describes"
-          :title="item.shopName"
+          :title="item.goodsName"
           :thumb="item.img"
           :num="item.productCount"
+          @click="gotodetail(item)"
         >
         <template #tags>
           <van-tag plain type="danger">交易成功</van-tag>
         </template>
         <template #footer>
-          <van-button size="mini" @click="rebuy(item)">再次购买</van-button>
-          <van-button size="mini" @click="evaluate(item)">评价</van-button>
+          <van-button size="mini" @click.stop="rebuy(item)">再次购买</van-button>
+          <van-button size="mini" @click.stop="evaluate(item)">评价</van-button>
         </template>
         </van-card>
         </van-tab>
@@ -135,16 +140,17 @@
           :key="index"
           :price="item.totalPrice"
           :desc="item.describes"
-          :title="item.shopName"
+          :title="item.goodsName"
           :thumb="item.img"
           :num="item.productCount"
+          @click="gotodetail(item)"
         >
         <template #tags>
           <van-tag plain type="danger">退款成功</van-tag>
         </template>
         <template #footer>
-          <van-button size="mini" @click="rebuy(item)">再次购买</van-button>
-          <van-button size="mini" @click="det(item)">删除</van-button>
+          <van-button size="mini" @click.stop="rebuy(item)">再次购买</van-button>
+          <van-button size="mini" @click.stop="det(item)">删除</van-button>
         </template>
       </van-card>
         </van-tab>
@@ -181,6 +187,9 @@ export default {
   methods:{
       undo(){
           this.$router.go(-1);
+      },
+      gotodetail(item){
+          this.$router.push('/orderdetail?id=' + item.id);
       },
       rebuy(item){
         this.$ajax.updStatus(0,item.id).then(

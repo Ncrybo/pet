@@ -17,6 +17,10 @@ public class Order implements Serializable {
     private Integer userId;
     private Date orderTime;
     private String shopName;
+    private String goodsName;
     private String img;
     private String describes;
+    private String name;
+    private String address;
+    private String tel;
 }

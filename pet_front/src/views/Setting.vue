@@ -46,10 +46,10 @@
     }
     </script>
 
-    <<style scoped>
+<style scoped>
     .touxiang {
-  width: 60px; 
-  height: 60px;
-  border-radius: 50%;
-}
-    </style>
+        width: 60px; 
+        height: 60px;
+        border-radius: 50%;
+    }
+</style>

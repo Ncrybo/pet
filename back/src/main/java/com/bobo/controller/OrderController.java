@@ -6,6 +6,7 @@ import com.bobo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,5 +32,11 @@ public class OrderController {
     public Result detOrder(@PathVariable("id") Integer id){
         orderService.detCOrder(id);
         return Result.succeed("删除成功",1);
+    }
+
+    @PostMapping("/getDetail")
+    public Result getDetail(@RequestParam("id")Integer id){
+        Order order = orderService.getDetail(id);
+        return Result.succeed("获取订单详情成功",order);
     }
 }

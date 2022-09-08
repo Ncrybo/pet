@@ -17,4 +17,6 @@ public class OrderService {
     public void updStatus(Integer status,Integer id){orderMapper.updStatus(status,id);}
 
     public void detCOrder(Integer id){orderMapper.delOrder(id);}
+
+    public Order getDetail(Integer id){return orderMapper.getDetail(id);}
 }
