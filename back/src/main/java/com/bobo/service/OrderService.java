@@ -19,4 +19,6 @@ public class OrderService {
     public void detCOrder(Integer id){orderMapper.delOrder(id);}
 
     public Order getDetail(Integer id){return orderMapper.getDetail(id);}
+
+    public void addOrder(Order order){orderMapper.addOrder(order);}
 }

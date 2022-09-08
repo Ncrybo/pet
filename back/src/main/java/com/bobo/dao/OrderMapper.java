@@ -21,5 +21,6 @@ public interface OrderMapper {
     Order getDetail(Integer id);
 
     @Insert("insert into shop_order(order_no,goods_id,status,product_count,total_price,address_id " +
-            "user_id,order_time) values(#{},#{},#{},#{},#{},)")
+            "user_id,order_time) values(#{no},#{goodsId},#{status},#{productCount},#{totalPrice},#{addressId})")
+    void addOrder(Order order);
 }
