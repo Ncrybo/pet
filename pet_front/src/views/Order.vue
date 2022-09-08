@@ -250,4 +250,11 @@ export default {
     margin-left: 200px;
     margin-top: -40px;
   }
+  .header{
+    height: 6vh;
+  }
+  .van-tab__pane-wrapper{
+    height: 88vh;
+    overflow: auto;
+  }
 </style>
