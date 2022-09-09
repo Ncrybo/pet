@@ -92,7 +92,7 @@ export default {
         }
       },
       increase(obj){
-        if(obj.type === "pet")
+        if(obj.type === "1")
         {
           Dialog({ message: '宠物只有一只，不能加购' });
         }
