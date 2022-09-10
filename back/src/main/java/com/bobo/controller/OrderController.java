@@ -4,11 +4,10 @@ import com.bobo.entity.Order;
 import com.bobo.entity.Result;
 import com.bobo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -37,6 +36,17 @@ public class OrderController {
     @PostMapping("/getDetail")
     public Result getDetail(@RequestParam("id")Integer id){
         Order order = orderService.getDetail(id);
+        return Result.succeed("获取订单详情成功",order);
+    }
+
+    @PostMapping("/addOrder")
+    public Result addOrder(@RequestBody Order order){
+        Date date = new Date();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        System.out.println(dateFormat.format(date));
+        System.out.println(date);
+        order.setOrderTime(date);
+        order.setOrderNo(dateFormat.format(date)+order.getId());
         return Result.succeed("获取订单详情成功",order);
     }
 }

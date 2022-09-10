@@ -135,6 +135,9 @@ export default {
     getDetail(id){
         return instance.post('/getDetail?id='+id)
     },
+    addOrder(data){
+        return instance.post('/addOrder', data)
+    },
 
     //李炜东
     addUser(uname,psw){
