@@ -6,9 +6,12 @@ import com.bobo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 public class OrderController {
@@ -42,12 +45,13 @@ public class OrderController {
     @PostMapping("/addOrder")
     public Result addOrder(@RequestBody Order order){
         Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
-        System.out.println(dateFormat.format(date));
-        System.out.println(date);
+        Timestamp t = new Timestamp(date.getTime());
+        DateFormat format = new SimpleDateFormat("yyyyMMdd");
+        String str = format.format(date);
+        order.setOrderTime(t);
+        Random r = new Random(1);
+        order.setOrderNo(str +r.nextInt(90) + 10);
         order.setStatus(1);
-        order.setOrderTime(date);
-        order.setOrderNo(dateFormat.format(date)+order.getId());
         orderService.addOrder(order);
         return Result.succeed("生成订单成功",1);
     }

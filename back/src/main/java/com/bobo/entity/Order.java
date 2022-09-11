@@ -1,6 +1,7 @@
 package com.bobo.entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,6 +16,7 @@ public class Order implements Serializable {
     private Double totalPrice;
     private Integer addressId;
     private Integer userId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date orderTime;
     private String shopName;
     private String goodsName;

@@ -103,13 +103,17 @@
                     Toast.success("付款成功")
                     for(let j=0;j<this.arr.length;j++)
                     {
-                        var total = this.goods[j].price * this.goods[j].count
-                        this.$ajax.addOrder({no:j,goodsId:this.goods[j].goodsId,productCount:this.goods[j].count,totalPrice:total,addressId:this.list.id}).then(
+                        this.$ajax.addOrder({orderNo:j,goodsId:this.goods[j].goodsId,productCount:this.goods[j].count,totalPrice:this.goods[j].price * this.goods[j].count,addressId:this.list.id,userId:this.uid}).then(
                         res => {        
-                            if(res.code == 100) {      
-                                Toast.success("订单已生成")
+                        if(res.code == 100) {      
+                            Toast.success("订单已生成")
                         }
                         else {
+                            console.log(j);
+                            console.log(this.goods[j].goodsId);
+                            console.log(this.goods[j].count);
+                            console.log(this.goods[j].price * this.goods[j].count);
+                            console.log(this.list.id);
                             console.log(res);
                         }
                         })
