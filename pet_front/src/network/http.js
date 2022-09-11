@@ -141,7 +141,9 @@ export default {
     addOrder(data){
         return instance.post('/addOrder', data)
     },
-
+    payCart(id){
+        return instance.post('/payCart/'+id)
+    },
     //李炜东
     addUser(uname,psw){
         return instance.post('/addUser/'+uname+'/'+psw)

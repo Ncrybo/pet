@@ -45,9 +45,10 @@ public class OrderController {
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         System.out.println(dateFormat.format(date));
         System.out.println(date);
+        order.setStatus(1);
         order.setOrderTime(date);
         order.setOrderNo(dateFormat.format(date)+order.getId());
         orderService.addOrder(order);
-        return Result.succeed("生成订单成功",order);
+        return Result.succeed("生成订单成功",1);
     }
 }

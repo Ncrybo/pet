@@ -17,29 +17,77 @@
             <van-col><h1><van-icon name="arrow" /></h1></van-col>
         </van-row>
         </div>
+        <div class="card" style="text-align: left;">
+            <van-card
+            v-for="(item,index) in goods"
+            :key = index
+            :num="item.count"
+            :price="item.price"
+            :desc="item.describes"
+            :title="item.goodsName"
+            :thumb="item.img"
+            />
+        </div>
+        <van-submit-bar :price="this.sum * 100" button-text="提交订单" @submit="onSubmit" />
     </div>
 </template>
 
 <script>
+    import { Toast } from 'vant';
     export default {
         data(){
             return{
                 sum:0,
+                arr:this.$route.query.name,
                 uid:window.localStorage.getItem("uid"),
-                list: []
+                list: [],
+                goods: [],
             }
         },
         mounted() {
-            this.$ajax.getAddressDefault(this.uid).then(
-            res => {        
-            if(res.code == 100) {      
-                if(res.data != 1)
+            let ids = localStorage.getItem("ids")
+            console.log(this.arr)
+            this.sum = 0
+            for(let i = 0;i<this.arr.length;i++){
+                this.$ajax.payCart(this.arr[i]).then(
+                res => {        
+                if(res.code == 100) {      
+                    this.goods.push(res.data) 
+                    this.sum += res.data.price * res.data.count
+                }
+                else {
+                    console.log(res);
+                }
+                })
+            }
+
+            if(ids != -1){
+                this.$ajax.getAddressById(ids).then(
+                res => {        
+                    if(res.code == 100) {      
                     this.list = res.data;   
+                }
+                else {
+                    console.log(res);
+                }
+                })
             }
-            else {
-                console.log(res);
+            else{
+            this.$ajax.getAddressDefault(this.uid).then(
+                res => {        
+                if(res.code == 100) {      
+                    if(res.data != 1)
+                        this.list = res.data;   
+                    else
+                    {
+                        Toast.fail("暂无地址，请点击上方添加")
+                    }
+                }
+                else {
+                    console.log(res);
+                }
+                })
             }
-            })
         },
         methods: {
             undo(){
@@ -47,7 +95,29 @@
             },
             chooes(){
                 this.$router.push({path:"/address?id=" + 1})
-            }
+                localStorage.setItem('ids',-1)
+            },
+            onSubmit(){
+                if(this.list.name != null)
+                {
+                    Toast.success("付款成功")
+                    for(let j=0;j<this.arr.length;j++)
+                    {
+                        var total = this.goods[j].price * this.goods[j].count
+                        this.$ajax.addOrder({no:j,goodsId:this.goods[j].goodsId,productCount:this.goods[j].count,totalPrice:total,addressId:this.list.id}).then(
+                        res => {        
+                            if(res.code == 100) {      
+                                Toast.success("订单已生成")
+                        }
+                        else {
+                            console.log(res);
+                        }
+                        })
+                    }
+                }
+                else
+                    Toast.fail("暂无地址，请点击上方添加")
+            },
             
         }
       

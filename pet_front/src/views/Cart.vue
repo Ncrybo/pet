@@ -36,7 +36,7 @@
     </div>
   </div>
   </van-checkbox-group>
-    <van-submit-bar :price="totalprice*100" button-text="提交订单" class="vab">
+    <van-submit-bar :price="totalprice*100" button-text="立即结算" class="vab"  @submit="onSubmit">
       <van-checkbox v-model="checked" @change="checkAll">全选</van-checkbox>
     </van-submit-bar>
 
@@ -46,6 +46,7 @@
 
 <script>
 import tabBar from '../components/tabBar.vue';
+import { Toast } from 'vant';
 import { Dialog } from 'vant';
 
 export default {
@@ -115,9 +116,18 @@ export default {
               for(var j=0;j<this.shops[i].list.length;j++)
               {
                 if(this.results[z]===this.shops[i].list[j].id)
+                {
+                  
                   this.totalprice += this.shops[i].list[j].price*this.shops[i].list[j].count
+                }
               }
             }
+      },
+      onSubmit(){
+        if(this.results.length > 0)
+          this.$router.push({path:"/orderpay", query: {name: this.results}})
+        else
+          Toast.fail("您还没有选择商品哦！")
       },
     },
 

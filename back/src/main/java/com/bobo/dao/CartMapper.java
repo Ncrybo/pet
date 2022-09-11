@@ -32,4 +32,6 @@ public interface CartMapper {
     @Delete("delete from shop_cart where id = #{id}")
     public void delCart(Integer id);
 
+    @Select("select * from shop_cart as cart join shop_goods as goods on cart.id = #{id} and cart.goods_id = goods.id")
+    Cart payCart(Integer id);
 }
