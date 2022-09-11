@@ -47,6 +47,7 @@ public class OrderController {
         System.out.println(date);
         order.setOrderTime(date);
         order.setOrderNo(dateFormat.format(date)+order.getId());
-        return Result.succeed("获取订单详情成功",order);
+        orderService.addOrder(order);
+        return Result.succeed("生成订单成功",order);
     }
 }

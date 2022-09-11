@@ -66,6 +66,14 @@ const routes = [
       requiresAuth: true
     }
   },
+  {                      //订单结算路由
+    path: "/orderpay",
+    name: "orderpay",
+    component: () => import("../views/OrderPay.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
   {                      //订单详情路由
     path: "/orderdetail",
     name: "orderdetail",

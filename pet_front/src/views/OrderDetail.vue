@@ -10,11 +10,11 @@
         <br>
         <div class="address">
             <van-row>
-                <van-col offset="5">送至{{this.list.address}}</van-col>
+                <van-col offset="1"><h3><van-icon name="location-o" />{{this.list.address}}</h3></van-col>
             </van-row>
             <van-row>
-                <van-col offset="6">{{this.list.name}}</van-col>
-                <van-col>{{this.list.tel}}</van-col>
+                <van-col offset="1">{{this.list.name}}</van-col>
+                <van-col offset="1">{{this.list.tel}}</van-col>
             </van-row>
         </div>
         <br>
@@ -39,7 +39,7 @@
                         <van-tag plain type="danger">七天无理由退换</van-tag>
                     </van-row>
                 </van-col>
-                <van-col offset="8">
+                <van-col offset="6">
                     <van-row style="text-align: right;">
                         ￥{{this.list.totalPrice}}
                     </van-row>
@@ -136,7 +136,7 @@
         height: 6vh;
     }
     .address{
-        height: 8vh;
+        height: 20vh;
         background-color: white;
         text-align: left;
         border: 1px dotted darkslategray;
@@ -144,7 +144,7 @@
         overflow: auto;
     }
     .card{
-        height: 76vh;
+        height: 60vh;
         background-color: white;
         text-align: left;
         border: 1px dotted darkslategray;

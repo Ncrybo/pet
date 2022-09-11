@@ -24,6 +24,16 @@ public class AddressController {
         return Result.succeed("获取当前地址成功",addressService.getAddressById(id));
     }
 
+    @PostMapping("/getAddressDefault/{uid}")
+    public Result getAddressDefault(@PathVariable("uid") Integer uid){
+        Address address1 = addressService.getUserDefault(uid);
+        if(address1 != null)
+            return Result.succeed("获取默认地址成功",address1);
+        else
+            return Result.succeed("该用户没有默认地址",1);
+    }
+
+
     @PostMapping("/addAddress")
     public Result addAddress(@RequestBody Address address){
         Address address1 = addressService.getUserDefault(address.getUid());

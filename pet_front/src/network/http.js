@@ -114,6 +114,9 @@ export default {
     getAddressById(id){
         return instance.post('/getAddressById?id='+id)
     },
+    getAddressDefault(uid){
+        return instance.post('/getAddressDefault/'+uid)
+    },
     addAddress(data){
         return instance.post('/addAddress', data)
     },
