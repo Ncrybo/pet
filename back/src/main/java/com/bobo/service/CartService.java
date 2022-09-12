@@ -23,4 +23,6 @@ public class CartService {
     public void addCount(Integer id){cartMapper.addCount(id);}
 
     public void downCount(Integer id){cartMapper.downCount(id);}
+
+    public Cart payCart(Integer id){return cartMapper.payCart(id);}
 }

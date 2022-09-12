@@ -5,7 +5,7 @@
     </div>
     <div class="main">
         <div class="title">
-            <van-icon name="/logo.jpg"  size="2.6em"/><span>登录体验更多精彩</span> 
+            <van-icon name="/logo.png"  size="2.6em"/><span>登录体验更多精彩</span> 
         </div>
         <div class="login_form">
             <van-form >

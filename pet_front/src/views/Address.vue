@@ -10,6 +10,7 @@
                 default-tag-text="默认"
                 @add="onAdd"
                 @edit="onEdit"
+                @click-item="chooes"
             />
         </div>
     </div>
@@ -46,6 +47,13 @@
             onEdit(item) {
                 this.$router.push('/editaddress?id=' + item.id);
             },
+            chooes(item){
+                if(this.$route.query.id == 1)
+                {
+                    localStorage.setItem('ids',item.id)
+                    this.$router.go(-1);
+                }
+            }
         },
 };
 </script>

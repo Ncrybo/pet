@@ -40,12 +40,12 @@
         <!-- ==========商品滑动标签============= -->
         <van-tabs class="goodsCard" v-model="active" @change="changeGoods" animated swipeable >
             <van-tab v-for="type in types" :title="type" :key="type" >
-                <van-card v-for="item in goods" :key="item.goodsId"
+                <van-card v-for="item in goods" :key="item.id"
                 :price="item.price"
-                :desc="item.describe"  
+                :desc="item.describes"  
                 :title="item.goodsName"
                 :thumb="item.img"
-                @click="toInfo(item.goodsId)"
+                @click="toInfo(item.id)"
                 />
             </van-tab>
         </van-tabs>
@@ -73,9 +73,15 @@ export default {
             this.$router.push('/map')
         },
         changeGoods(index,title) {
+<<<<<<< .mine
             if(title == '宠物') title = 1;
             else if(title == '服务') title = '3';
             else if(title == '商品') title = '2';
+=======
+            if(title == '宠物') title = '1';
+            else if(title == '服务') title = '3';
+            else if(title == '商品') title = '2';
+>>>>>>> .theirs
             this.$ajax.checkGoods(title,this.shopName). then(
                 res => {
                     this.goods = res.data;
@@ -91,11 +97,16 @@ export default {
         this.$ajax.getShopInfo(this.shopName).then(
             res => {
                 this.shop = res.data;
-                this.star = res.data.star;
+                this.star = res.data.shopStar;
             }
         );
+<<<<<<< .mine
         //通过商店名称 和 商品种类 更新显示的商品数据，默认显示宠物
         this.$ajax.checkGoods(1,this.shopName).then(
+=======
+        this.$ajax.checkGoods("1",this.shopName).then(
+
+>>>>>>> .theirs
             res => {
                 this.goods = res.data;
             }

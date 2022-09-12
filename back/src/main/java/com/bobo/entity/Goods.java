@@ -6,11 +6,11 @@ import java.io.Serializable;
 
 @Data
 public class Goods implements Serializable {
-    private Integer goodsId;
+    private Integer id;
     private String goodsName;
     private String shopName;
     private String img;
     private Double price;
     private String describes;
-    private String type;
+    private Integer type;
 }
