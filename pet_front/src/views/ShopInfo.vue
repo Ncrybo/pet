@@ -73,15 +73,9 @@ export default {
             this.$router.push('/map')
         },
         changeGoods(index,title) {
-<<<<<<< .mine
-            if(title == '宠物') title = 1;
-            else if(title == '服务') title = '3';
-            else if(title == '商品') title = '2';
-=======
             if(title == '宠物') title = '1';
             else if(title == '服务') title = '3';
             else if(title == '商品') title = '2';
->>>>>>> .theirs
             this.$ajax.checkGoods(title,this.shopName). then(
                 res => {
                     this.goods = res.data;
@@ -100,13 +94,9 @@ export default {
                 this.star = res.data.shopStar;
             }
         );
-<<<<<<< .mine
-        //通过商店名称 和 商品种类 更新显示的商品数据，默认显示宠物
-        this.$ajax.checkGoods(1,this.shopName).then(
-=======
-        this.$ajax.checkGoods("1",this.shopName).then(
 
->>>>>>> .theirs
+        //通过商店名称 和 商品种类 更新显示的商品数据，默认显示宠物
+        this.$ajax.checkGoods("1",this.shopName).then(
             res => {
                 this.goods = res.data;
             }
