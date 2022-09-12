@@ -10,17 +10,17 @@
         <br>
         <div class="address">
             <van-row>
-                <van-col offset="1"><h3><van-icon name="location-o" />{{this.list.address}}</h3></van-col>
+                <van-col offset="1"><h3><van-icon name="location-o" />{{list.address}}</h3></van-col>
             </van-row>
             <van-row>
-                <van-col offset="1">{{this.list.name}}</van-col>
-                <van-col offset="1">{{this.list.tel}}</van-col>
+                <van-col offset="1">{{list.name}}</van-col>
+                <van-col offset="1">{{list.tel}}</van-col>
             </van-row>
         </div>
         <br>
         <div class="card">
             <van-row>
-                <van-icon name="shop-o" />{{this.list.shopName}}<van-icon name="arrow" />
+                <van-icon name="shop-o" />{{list.shopName}}<van-icon name="arrow" />
             </van-row>
             <br>
             <van-row gutter="8">
@@ -29,10 +29,10 @@
                 </van-col>
                 <van-col>
                     <van-row>
-                        {{this.list.goodsName}}
+                        {{list.goodsName}}
                     </van-row>
                     <van-row>
-                        {{this.list.describes}}
+                        {{list.describes}}
                     </van-row>
                         <br>
                     <van-row>
@@ -41,10 +41,10 @@
                 </van-col>
                 <van-col offset="6">
                     <van-row style="text-align: right;">
-                        ￥{{this.list.totalPrice}}
+                        ￥{{list.totalPrice}}
                     </van-row>
                     <van-row style="text-align: right;">
-                        x{{this.list.productCount}}
+                        x{{list.productCount}}
                     </van-row>
                 </van-col>
             </van-row>
@@ -57,7 +57,7 @@
                     实付款
                 </van-col>
                 <van-col offset="17">
-                    ￥{{this.list.totalPrice}}
+                    ￥{{list.totalPrice}}
                 </van-col>
             </van-row>
             <van-row>
@@ -65,7 +65,7 @@
                     订单编号
                 </van-col>
                 <van-col offset="18">
-                    {{this.list.orderNo}}
+                    {{list.orderNo}}
                 </van-col>
             </van-row>
             <van-row>
@@ -73,7 +73,7 @@
                     下单时间
                 </van-col>
                 <van-col offset="12">
-                    {{this.list.orderTime}}
+                    {{list.orderTime}}
                 </van-col>
             </van-row>
         </div>

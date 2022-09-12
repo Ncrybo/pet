@@ -20,9 +20,14 @@
         </template>
       </van-nav-bar>
     </div>
+    <van-dialog v-model="show" :title="goods.goodsName"  :before-close="beforeClose">
+      <video ref="videoPlayer1" controls :src=goods.video :poster=goods.img controlslist="nodownload" 
+           style="width: 100%; height: 100%; object-fit: fill">
+      </video>
+    </van-dialog>
     <!--正文-->
     <div class="body">
-        <div class="petimg"><img :src="goods.img" alt="" style="width: 100%; height:50vh"></div>
+        <div class="petimg" @click="showImg"><img :src="goods.img" alt="" style="width: 100%; height:50vh"></div>
         <div>
           <van-row>
             <van-col class="price">
@@ -91,10 +96,12 @@
 
 <script>
     import { Toast } from 'vant';
+    import { ImagePreview } from 'vant';
     export default {
         name: 'goodsInfo', //组件名
         data() {
             return {
+              show:false,
               showShare: false,
               goodsId: this.$route.query.goodsId,
               preprice: 0,
@@ -132,7 +139,19 @@
         methods: {
           undo(){
                 this.$router.go(-1);
-            },
+          },
+          showImg(){
+            if(this.goods.video == null)
+              ImagePreview({images:[this.goods.img]});
+            else
+              this.show=true
+          },
+          beforeClose : function (action, done) { // 点击事件 - 备注按钮提示框
+              if (action === 'confirm') { // 确认
+                this.$refs.videoPlayer1.pause();
+                done(); // 关闭提示框
+              }
+          },
           onSelect(option) {
             console.log(this.goods)
             Toast(option.name);

@@ -46,33 +46,7 @@
         },
         mounted() {
             let ids = localStorage.getItem("ids")
-            console.log(this.arr)
             this.sum = 0
-            for(let i = 0;i<this.arr.length;i++){
-                this.$ajax.payCart(this.arr[i]).then(
-                res => {        
-                if(res.code == 100) {      
-                    this.goods.push(res.data) 
-                    this.sum += res.data.price * res.data.count
-                }
-                else {
-                    console.log(res);
-                }
-                })
-            }
-
-            if(ids != -1){
-                this.$ajax.getAddressById(ids).then(
-                res => {        
-                    if(res.code == 100) {      
-                    this.list = res.data;   
-                }
-                else {
-                    console.log(res);
-                }
-                })
-            }
-            else{
             this.$ajax.getAddressDefault(this.uid).then(
                 res => {        
                 if(res.code == 100) {      
@@ -86,8 +60,32 @@
                 else {
                     console.log(res);
                 }
+            })
+
+            for(let i = 0;i<this.arr.length;i++){
+                this.$ajax.payCart(this.arr[i]).then(
+                res => {        
+                if(res.code == 100) {      
+                    this.goods.push(res.data) 
+                    this.sum += res.data.price * res.data.count
+                }
+                else {
+                    console.log(res);
+                }
                 })
             }
+            if(ids != -1){
+                this.$ajax.getAddressById(ids).then(
+                res => {        
+                    if(res.code == 100) {      
+                    this.list = res.data;   
+                }
+                else {
+                    console.log(res);
+                }
+                })
+            }
+
         },
         methods: {
             undo(){
