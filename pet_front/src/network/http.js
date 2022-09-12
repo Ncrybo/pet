@@ -2,7 +2,7 @@ import axios from "axios"
 
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.defaults.baseURL = 'http://127.0.0.1:18083';
+axios.defaults.baseURL = 'http://127.0.0.1:18083/pet-api';
 let instance = axios.create({});
 /*
     请求拦截器， 每个请求都带上token

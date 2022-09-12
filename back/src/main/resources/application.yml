@@ -1,6 +1,7 @@
 server:
   port: 18083
   servlet:
+    context-path: /pet-api
     session:
       timeout: 60
 spring:
