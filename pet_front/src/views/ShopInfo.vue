@@ -87,12 +87,15 @@ export default {
         }
     },
     mounted() {
+        //通过商店名字，获取商店所有信息
         this.$ajax.getShopInfo(this.shopName).then(
             res => {
                 this.shop = res.data;
                 this.star = res.data.shopStar;
             }
         );
+
+        //通过商店名称 和 商品种类 更新显示的商品数据，默认显示宠物
         this.$ajax.checkGoods("1",this.shopName).then(
             res => {
                 this.goods = res.data;
