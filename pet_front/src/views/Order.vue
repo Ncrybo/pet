@@ -255,7 +255,6 @@ export default {
         this.$router.push('/orderdetail?id=' + item.id);
       },
 
-
       evaluate(item){     //评价
         this.$ajax.updStatus(4,item.id).then(
             res => {  

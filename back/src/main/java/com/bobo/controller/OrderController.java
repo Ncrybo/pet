@@ -57,7 +57,6 @@ public class OrderController {
         order.setOrderTime(t);
         Random r = new Random(1);
         order.setOrderNo(str +r.nextInt(90) + 10);
-        order.setStatus(1);
         orderService.addOrder(order);
         return Result.succeed("生成订单成功",1);
     }

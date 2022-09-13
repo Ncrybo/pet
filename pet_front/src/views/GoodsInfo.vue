@@ -88,7 +88,7 @@
         <van-goods-action-icon icon="cart-o" text="购物车" badge="5" @click="gotocart"/>
         <van-goods-action-icon icon="shop-o" text="店铺" badge="12" @click="gotoshop"/>
         <van-goods-action-button type="warning" text="加入购物车" @click="addCart"/>
-        <van-goods-action-button type="danger" text="立即购买" />
+ <!--      <van-goods-action-button type="danger" text="立即购买" />  --> 
       </van-goods-action>
     </div>
   </div>

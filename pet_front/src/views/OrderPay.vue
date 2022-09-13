@@ -34,6 +34,7 @@
 
 <script>
     import { Toast } from 'vant';
+    import { Dialog } from 'vant';
     export default {
         data(){
             return{
@@ -98,24 +99,44 @@
             onSubmit(){
                 if(this.list.name != null)
                 {
-                    Toast.success("付款成功")
-                    for(let j=0;j<this.arr.length;j++)
-                    {
-                        this.$ajax.addOrder({orderNo:j,goodsId:this.goods[j].goodsId,productCount:this.goods[j].count,totalPrice:this.goods[j].price * this.goods[j].count,addressId:this.list.id,userId:this.uid}).then(
-                        res => {        
-                        if(res.code == 100) {      
-                            Toast.success("订单已生成")
+                    Dialog.confirm({
+                    title: '支付订单',
+                    message:
+                        '确认支付？',
+                    })
+                    .then(() => {
+                        // on confirm
+                        Toast.success("付款成功")
+                        for(let j=0;j<this.arr.length;j++)
+                        {
+                            this.$ajax.addOrder({orderNo:j,goodsId:this.goods[j].goodsId,status:1,productCount:this.goods[j].count,totalPrice:this.goods[j].price * this.goods[j].count,addressId:this.list.id,userId:this.uid}).then(
+                            res => {        
+                            if(res.code == 100) {      
+                                Toast.success("订单已生成")
+                            }
+                            else {
+                                console.log(res);
+                            }
+                            })
                         }
-                        else {
-                            console.log(j);
-                            console.log(this.goods[j].goodsId);
-                            console.log(this.goods[j].count);
-                            console.log(this.goods[j].price * this.goods[j].count);
-                            console.log(this.list.id);
-                            console.log(res);
+                    })
+                    .catch(() => {
+                        // on cancel
+                        Toast.success("付款失败")
+                        for(let j=0;j<this.arr.length;j++)
+                        {
+                            this.$ajax.addOrder({orderNo:j,goodsId:this.goods[j].goodsId,status:0,productCount:this.goods[j].count,totalPrice:this.goods[j].price * this.goods[j].count,addressId:this.list.id,userId:this.uid}).then(
+                            res => {        
+                            if(res.code == 100) {      
+                                Toast.success("已添加到待付款")
+                            }
+                            else {
+                                console.log(res);
+                            }
+                            })
                         }
-                        })
-                    }
+                        });
+
                 }
                 else
                     Toast.fail("暂无地址，请点击上方添加")

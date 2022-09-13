@@ -10,6 +10,7 @@
              <van-nav-bar left-arrow v-if="(this.list.status == 2)" @click-left="undo" title="卖家已发货"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 3)" @click-left="undo" title="交易成功"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 4)" @click-left="undo" title="已完成评价"/>
+             
         </div> 
         <br>
         <div class="address">
@@ -78,6 +79,14 @@
                 </van-col>
                 <van-col offset="12">
                     {{list.orderTime}}
+                </van-col>
+            </van-row>
+            <van-row v-if="(this.list.status < -1)">
+                <van-col>
+                    退单理由：
+                </van-col>
+                <van-col>
+                    {{list.reason}}
                 </van-col>
             </van-row>
         </div>
