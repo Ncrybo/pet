@@ -4,9 +4,16 @@ module.exports = defineConfig({
   lintOnSave: false,
 
   devServer: {
-    host: 'localhost',
+    host: '127.0.0.1',
     open: true,
     proxy: {
+      '/pet-api/*': {
+        target: 'http://localhost:18083',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/pet-api': '/'
+        }
+      },
       '/huawei': {
         target: 'https://oauth-login.cloud.huawei.com',
         changeOrigin: true,
@@ -16,6 +23,7 @@ module.exports = defineConfig({
           '^/huawei':"/"
         }
       },
+      
       
     }
   }
