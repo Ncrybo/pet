@@ -132,6 +132,9 @@ export default {
     updStatus(status,id){
         return instance.post('/updStatus/'+status+'/'+id)
     },
+    addReason(reason,id){
+        return instance.post('/addReason/'+reason+'/'+id)
+    },
     detOrder(id){
         return instance.post('/detOrder/'+id)
     },

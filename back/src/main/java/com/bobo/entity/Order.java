@@ -16,6 +16,7 @@ public class Order implements Serializable {
     private Double totalPrice;
     private Integer addressId;
     private Integer userId;
+    private String reason;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date orderTime;
     private String shopName;

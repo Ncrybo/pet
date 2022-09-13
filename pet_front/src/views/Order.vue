@@ -9,7 +9,6 @@
         <van-tab title="全部">
           <van-card
           v-for="(item,index) in list" 
-          v-if="(item.status > -1)"
           :key="index"
           :price="item.totalPrice"
           :desc="item.describes"
@@ -23,7 +22,11 @@
           <van-tag v-if="(item.status == 1)" plain type="danger">买家已支付</van-tag>
           <van-tag v-if="(item.status == 2)" plain type="danger">卖家已发货</van-tag>
           <van-tag v-if="(item.status == 3)" plain type="danger">交易成功</van-tag>
-          <van-tag v-if="(item.status == 4)" plain type="danger">退款成功</van-tag>
+          <van-tag v-if="(item.status == 4)" plain type="danger">已完成评价</van-tag>
+          <van-tag v-if="(item.status == -1)" plain type="danger">订单已取消</van-tag>
+          <van-tag v-if="(item.status == -2)" plain type="danger">退单等待审核</van-tag>
+          <van-tag v-if="(item.status == -3)" plain type="danger">退单成功</van-tag>
+          <van-tag v-if="(item.status == -4)" plain type="danger">已被管理员退单</van-tag>
         </template>
         <template #footer>
           <van-button v-if="(item.status == 0)" size="mini" @click.stop="cancel(item)">取消订单</van-button>
@@ -41,6 +44,11 @@
           <van-button v-if="(item.status == 4)" size="mini" @click.stop="rebuy(item)">再次购买</van-button>
           <van-button v-if="(item.status == 4)" size="mini" @click.stop="det(item)">删除</van-button>
 
+          <van-button v-if="(item.status == -1)" size="mini" @click.stop="rebuy(item)">再次购买</van-button>
+          <van-button v-if="(item.status == -1)" size="mini" @click.stop="det(item)">删除</van-button>
+
+          <van-button v-if="(item.status < -2)" size="mini" @click.stop="rebuy(item)">再次购买</van-button>
+          <van-button v-if="(item.status < -2)" size="mini" @click.stop="det(item)">删除</van-button>
         </template>
       </van-card>
         </van-tab>
@@ -62,7 +70,7 @@
         </template>
         <template #footer>
           <van-button size="mini" @click.stop="cancel(item)">取消订单</van-button>
-          <van-button size="mini" >继续付款</van-button>
+          <van-button size="mini" @click.stop="buy(item)">继续付款</van-button>
         </template>
         </van-card>
         </van-tab>
@@ -133,10 +141,11 @@
         </van-card>
         </van-tab>
       <!--下面是退款-->
-        <van-tab title="退款">
+
+        <van-tab title="退单退款">
           <van-card
           v-for="(item,index) in list" 
-          v-if="(item.status == 4)" 
+          v-if="(item.status < -1)" 
           :key="index"
           :price="item.totalPrice"
           :desc="item.describes"
@@ -146,7 +155,9 @@
           @click="gotodetail(item)"
         >
         <template #tags>
-          <van-tag plain type="danger">退款成功</van-tag>
+          <van-tag plain type="danger" v-if="(item.status == -2)" >退单等待审核</van-tag>
+          <van-tag plain type="danger" v-if="(item.status == -3)" >退单成功</van-tag>
+          <van-tag plain type="danger" v-if="(item.status == -4)" >已被管理员退单</van-tag>
         </template>
         <template #footer>
           <van-button size="mini" @click.stop="rebuy(item)">再次购买</van-button>
@@ -165,6 +176,8 @@ import { Dialog } from 'vant';
 export default {
   data() {
     return {
+      text:'',
+      show:false,
       active:0,
       uid:window.localStorage.getItem("uid"),
       list:[],
@@ -192,37 +205,57 @@ export default {
           this.$router.push('/orderdetail?id=' + item.id);
       },
       rebuy(item){
-        this.$ajax.updStatus(0,item.id).then(
-            res => {  
-              if(res.data == 1) {      
-              Dialog({ message: '已添加到待付款' });
-            }   
-        })
+          this.$router.push('/goodsInfo?goodsId=' + item.goodsId);
       },
       buy(item){      //付款
-        this.$ajax.updStatus(1,item.id).then(
-            res => {  
-              if(res.data == 1) {      
-              Dialog({ message: '付款成功' });
-            }   
+        Dialog.confirm({
+          title: '确认订单',
+          message:
+            '确认付款',
+        })
+          .then(() => {
+            // on confirm
+            this.$ajax.updStatus(1,item.id).then(
+              res => {  
+                if(res.data == 1) {      
+                Dialog({ message: '付款成功' });
+                this.$router.push('/orderdetail?id=' + item.id);
+              }   
+            })
           })
+          .catch(() => {
+            // on cancel
+            Dialog({ message: '付款已取消' });
+          });
       },
+
       got(item){    //确认收货
-        this.$ajax.updStatus(3,item.id).then(
-            res => {  
-              if(res.data == 1) {      
-              Dialog({ message: '收货成功' });
-            }   
-      })
+        Dialog.confirm({
+          title: '确认收货',
+          message:
+            '确认收货？',
+        })
+          .then(() => {
+            // on confirm
+            this.$ajax.updStatus(3,item.id).then(
+              res => {  
+                if(res.data == 1) {      
+                Dialog({ message: '收货成功' });
+                this.$router.push('/orderdetail?id=' + item.id);
+              }   
+            })
+          })
+          .catch(() => {
+            // on cancel
+            Dialog({ message: '取消' });
+          });
+  
       },
-      exit(item){     //申请退款
-        this.$ajax.updStatus(-3,item.id).then(
-            res => {  
-              if(res.data == 1) {      
-                Dialog({ message: '已申请退款' });
-            }   
-      })
+      exit(item){     //申请退单
+        this.$router.push('/orderdetail?id=' + item.id);
       },
+
+
       evaluate(item){     //评价
         this.$ajax.updStatus(4,item.id).then(
             res => {  
@@ -232,17 +265,41 @@ export default {
         })
       },
       cancel(item){   //取消订单
-        this.$ajax.updStatus(-1,item.id).then(
-            res => {  
-              if(res.data == 1) {      
-              Dialog({ message: '已申请取消' });
-            }   
+        Dialog.confirm({
+          title: '取消订单',
+          message:
+            '确认取消？',
         })
+          .then(() => {
+            // on confirm
+            this.$ajax.updStatus(-1,item.id).then(
+              res => {  
+                if(res.data == 1) {      
+                Dialog({ message: '已取消成功' });
+                this.$router.push('/orderdetail?id=' + item.id);
+              }   
+            })
+          })
+          .catch(() => {
+            // on cancel
+          });
       },
+
       det(item){
-        this.list.splice(item,1)
-        this.$ajax.detOrder(item.id);
-        Dialog({ message: '记录已删除' });
+        Dialog.confirm({
+          title: '删除订单',
+          message:
+            '确认删除？',
+        })
+          .then(() => {
+            // on confirm
+            this.list.splice(item,1)
+            this.$ajax.detOrder(item.id);
+            Dialog({ message: '订单记录已删除' });
+          })
+          .catch(() => {
+            // on cancel
+          });
       },
   },
 

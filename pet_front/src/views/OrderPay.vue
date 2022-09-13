@@ -135,4 +135,8 @@
         border-radius: 15px;
         overflow: auto;
     }
+    .card{
+        height: 65vh;
+        overflow: auto;
+    }
 </style>

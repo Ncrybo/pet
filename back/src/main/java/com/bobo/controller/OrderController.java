@@ -30,6 +30,12 @@ public class OrderController {
         return Result.succeed("修改成功",1);
     }
 
+    @PostMapping("/addReason/{reason}/{id}")
+    public Result addReason(@PathVariable("reason")String reason,@PathVariable("id")Integer id){
+        orderService.addReason(reason,id);
+        return Result.succeed("理由添加成功",1);
+    }
+
     @PostMapping("/detOrder/{id}")
     public Result detOrder(@PathVariable("id") Integer id){
         orderService.detCOrder(id);
