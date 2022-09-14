@@ -22,6 +22,8 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
         ret.add("/login");
         ret.add("/getAllShop");
         ret.add("/getAllGoods");
+        ret.add("/getCartTop");
+        ret.add("/getOrderTop");
         ret.add("/getGoodsById");
         ret.add("/addUser/{uname}/{psw}");
         ret.add("/parseToken");
