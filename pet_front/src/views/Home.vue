@@ -41,7 +41,7 @@
         
         <div class="heng">
           <div class="goodsItem" v-for="(item,index) in list1" :key="index">
-            <van-image :src="item.img" fit="cover" width="30vw" @click="gotogoods(item)"/>
+            <van-image :src="item.img" fit="cover" width="30vw" height="30vw " @click="gotogoods(item)"/>
             <div class="goodsname">{{item.name}}</div>
             <div class="prices"><span class="tejia">￥{{item.price * 0.5}}</span> <span class="yuanjia">￥{{item.price}}</span> </div>
           </div>
@@ -58,7 +58,7 @@
         <div class="remen_content">
           <van-grid :column-num="2" :center="false" :square="false">
             <van-grid-item class="card" v-for="(item,id) in list2" :key="id">
-              <van-image :src="item.img" width="100%"  @click="gotogoods(item)"/>
+              <van-image :src="item.img" width="100%" height="40vw"  @click="gotogoods(item)"/>
               <div class="goodsname">{{item.name}}</div>
               <div class="prices re_price">￥{{item.price}}</div>
             </van-grid-item>
@@ -93,7 +93,7 @@ export default {
           res => {        
             if(res.code == 100) {      
               this.list1 = res.data;   
-  
+              console.log(this.list1);
           }
           else {
               console.log(res);
