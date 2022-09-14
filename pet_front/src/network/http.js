@@ -2,7 +2,7 @@ import axios from "axios"
 
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.defaults.baseURL = 'http://127.0.0.1:18083';
+axios.defaults.baseURL = '/pet-api';
 let instance = axios.create({});
 /*
     请求拦截器， 每个请求都带上token
@@ -114,6 +114,9 @@ export default {
     getAddressById(id){
         return instance.post('/getAddressById?id='+id)
     },
+    getAddressDefault(uid){
+        return instance.post('/getAddressDefault/'+uid)
+    },
     addAddress(data){
         return instance.post('/addAddress', data)
     },
@@ -123,7 +126,24 @@ export default {
     getGoodsById(goodsId){
         return instance.post('/getGoodsById?goodsId='+goodsId)
     },
-
+    getOrders(uid){
+        return instance.post('/getOrders/'+uid)
+    },
+    updStatus(status,id){
+        return instance.post('/updStatus/'+status+'/'+id)
+    },
+    detOrder(id){
+        return instance.post('/detOrder/'+id)
+    },
+    getDetail(id){
+        return instance.post('/getDetail?id='+id)
+    },
+    addOrder(data){
+        return instance.post('/addOrder', data)
+    },
+    payCart(id){
+        return instance.post('/payCart/'+id)
+    },
     //李炜东
     addUser(uname,psw){
         return instance.post('/addUser/'+uname+'/'+psw)

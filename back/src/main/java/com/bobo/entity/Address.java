@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class Address {
-    Integer id;
-    Integer uid;
-    String name;
-    String address;
-    String tel;
-    Boolean isDefault;
+    private Integer id;
+    private Integer uid;
+    private String name;
+    private String address;
+    private String tel;
+    private Boolean isDefault;
 }

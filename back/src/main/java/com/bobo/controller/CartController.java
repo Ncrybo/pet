@@ -72,4 +72,8 @@ public class CartController {
         return Result.succeed("商品-1成功",1);
     }
 
+    @PostMapping("/payCart/{id}")
+    public Result payCart(@PathVariable("id") Integer id){
+        return Result.succeed("结算商品数据加载成功",cartService.payCart(id));
+    }
 }
