@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.TimeZone;
 
 @RestController
 public class OrderController {
@@ -44,6 +45,7 @@ public class OrderController {
 
     @PostMapping("/getDetail")
     public Result getDetail(@RequestParam("id")Integer id){
+
         Order order = orderService.getDetail(id);
         return Result.succeed("获取订单详情成功",order);
     }

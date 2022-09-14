@@ -1,5 +1,6 @@
 package com.bobo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,7 +18,7 @@ public class Order implements Serializable {
     private Integer addressId;
     private Integer userId;
     private String reason;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date orderTime;
     private String shopName;
     private String goodsName;

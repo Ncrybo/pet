@@ -10,7 +10,9 @@
              <van-nav-bar left-arrow v-if="(this.list.status == 2)" @click-left="undo" title="卖家已发货"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 3)" @click-left="undo" title="交易成功"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 4)" @click-left="undo" title="已完成评价"/>
-             
+
+             <div id="recomTime" v-if="(this.list.status == 0)">剩余支付时间 {{rocallTime}}</div>
+
         </div> 
         <br>
         <div class="address">
@@ -59,25 +61,25 @@
             <br>
             <van-row>
                 <van-col>
-                    实付款
+                    实付款:
                 </van-col>
-                <van-col offset="17">
+                <van-col offset="3">
                     ￥{{list.totalPrice}}
                 </van-col>
             </van-row>
             <van-row>
                 <van-col>
-                    订单编号
+                    订单编号:
                 </van-col>
-                <van-col offset="18">
+                <van-col offset="2">
                     {{list.orderNo}}
                 </van-col>
             </van-row>
             <van-row>
                 <van-col>
-                    下单时间
+                    下单时间:
                 </van-col>
-                <van-col offset="12">
+                <van-col offset="2">
                     {{list.orderTime}}
                 </van-col>
             </van-row>
@@ -85,7 +87,7 @@
                 <van-col>
                     退单理由：
                 </van-col>
-                <van-col>
+                <van-col offset="1">
                     {{list.reason}}
                 </van-col>
             </van-row>
@@ -123,6 +125,7 @@
                 id: this.$route.query.id,
                 show: false,
                 list:[],
+
             }
         },
         mounted() {
@@ -137,121 +140,123 @@
                 }
             })
         },
+
         methods: {
             undo(){
                 this.$router.go(-1);
             },
+
             rebuy(item){
           this.$router.push('/goodsInfo?goodsId=' + this.list.goodsId);
-      },
-      buy(){      //付款
-        Dialog.confirm({
-          title: '确认订单',
-          message:
-            '确认付款',
-        })
-          .then(() => {
-            // on confirm
-            this.$ajax.updStatus(1,this.list.id).then(
-              res => {  
-                if(res.data == 1) {      
-                Dialog({ message: '付款成功' });
-              }   
-            })
-          })
-          .catch(() => {
-            // on cancel
-            Dialog({ message: '付款已取消' });
-          });
-      },
+            },
+            buy(){      //付款
+              Dialog.confirm({
+                title: '确认订单',
+                message:
+                  '确认付款',
+              })
+                .then(() => {
+                  // on confirm
+                  this.$ajax.updStatus(1,this.list.id).then(
+                    res => {  
+                      if(res.data == 1) {      
+                      Dialog({ message: '付款成功' });
+                    }   
+                  })
+                })
+                .catch(() => {
+                  // on cancel
+                  Dialog({ message: '付款已取消' });
+                });
+            },
 
-      got(){    //确认收货
-        Dialog.confirm({
-          title: '确认收货',
-          message:
-            '确认收货？',
-        })
-          .then(() => {
-            // on confirm
-            this.$ajax.updStatus(3,this.list.id).then(
-              res => {  
-                if(res.data == 1) {      
-                Dialog({ message: '收货成功' });
-              }   
-            })
-          })
-          .catch(() => {
-            // on cancel
-            Dialog({ message: '取消' });
-          });
-  
-      },
-      exit(){     //申请退单
-        this.show=true
-      },
-      beforeClose : function (action, done) { // 点击事件 - 备注按钮提示框
-              if (action === 'confirm') { // 确认退款
-                this.$ajax.updStatus(-2,this.list.id).then(
+            got(){    //确认收货
+              Dialog.confirm({
+                title: '确认收货',
+                message:
+                  '确认收货？',
+              })
+                .then(() => {
+                  // on confirm
+                  this.$ajax.updStatus(3,this.list.id).then(
+                    res => {  
+                      if(res.data == 1) {      
+                      Dialog({ message: '收货成功' });
+                    }   
+                  })
+                })
+                .catch(() => {
+                  // on cancel
+                  Dialog({ message: '取消' });
+                });
+        
+            },
+            exit(){     //申请退单
+              this.show=true
+            },
+            beforeClose : function (action, done) { // 点击事件 - 备注按钮提示框
+                    if (action === 'confirm') { // 确认退款
+                      this.$ajax.updStatus(-2,this.list.id).then(
+                        res => {  
+                          if(res.data == 1) {      
+                            Dialog({ message: '已申请退款' });
+                            }   
+                      })
+                      this.$ajax.addReason(this.text,this.list.id)
+                      this.$router.push('/order');
+                      done(); // 关闭提示框
+                    }
+                    else if(action === 'cancel')
+                      done(); // 关闭提示框
+
+              },
+
+            evaluate(){     //评价
+              this.$ajax.updStatus(4,this.list.id).then(
                   res => {  
                     if(res.data == 1) {      
-                      Dialog({ message: '已申请退款' });
-                      }   
+                    Dialog({ message: '评价成功，订单已完成' });
+                  }   
+              })
+            },
+            cancel(){   //取消订单
+              Dialog.confirm({
+                title: '取消订单',
+                message:
+                  '确认取消？',
+              })
+                .then(() => {
+                  // on confirm
+                  this.$ajax.updStatus(-1,this.list.id).then(
+                    res => {  
+                      if(res.data == 1) {      
+                      Dialog({ message: '已取消成功' });
+                    }   
+                  })
                 })
-                this.$ajax.addReason(this.text,this.list.id)
-                this.$router.push('/order');
-                done(); // 关闭提示框
+                .catch(() => {
+                  // on cancel
+                });
+            },
+
+            det(){
+              Dialog.confirm({
+                title: '删除订单',
+                message:
+                  '确认删除？',
+              })
+                .then(() => {
+                  // on confirm
+                  this.$ajax.detOrder(this.list.id);
+                  Dialog({ message: '订单记录已删除' });
+                  this.$router.push('/order');
+                })
+                .catch(() => {
+                  // on cancel
+                });
+            },
               }
-              else if(action === 'cancel')
-                 done(); // 关闭提示框
-
-        },
-
-      evaluate(){     //评价
-        this.$ajax.updStatus(4,this.list.id).then(
-            res => {  
-              if(res.data == 1) {      
-              Dialog({ message: '评价成功，订单已完成' });
-            }   
-        })
-      },
-      cancel(){   //取消订单
-        Dialog.confirm({
-          title: '取消订单',
-          message:
-            '确认取消？',
-        })
-          .then(() => {
-            // on confirm
-            this.$ajax.updStatus(-1,this.list.id).then(
-              res => {  
-                if(res.data == 1) {      
-                Dialog({ message: '已取消成功' });
-              }   
-            })
-          })
-          .catch(() => {
-            // on cancel
-          });
-      },
-
-      det(){
-        Dialog.confirm({
-          title: '删除订单',
-          message:
-            '确认删除？',
-        })
-          .then(() => {
-            // on confirm
-            this.$ajax.detOrder(this.list.id);
-            Dialog({ message: '订单记录已删除' });
-            this.$router.push('/order');
-          })
-          .catch(() => {
-            // on cancel
-          });
-      },
-        }
-      
+            
     }
     </script>
 
