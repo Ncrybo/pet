@@ -1,26 +1,33 @@
 <template>
     <div class="detail">
         <div class="header">
+             <van-nav-bar left-arrow v-if="(this.list.status == -4)" @click-left="undo" title="已被管理员退单"/>
+             <van-nav-bar left-arrow v-if="(this.list.status == -3)" @click-left="undo" title="退单成功"/>
+             <van-nav-bar left-arrow v-if="(this.list.status == -2)" @click-left="undo" title="已申请退单"/>
+             <van-nav-bar left-arrow v-if="(this.list.status == -1)" @click-left="undo" title="订单已取消"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 0)" @click-left="undo" title="等待付款"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 1)" @click-left="undo" title="买家已付款"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 2)" @click-left="undo" title="卖家已发货"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 3)" @click-left="undo" title="交易成功"/>
-             <van-nav-bar left-arrow v-if="(this.list.status == 4)" @click-left="undo" title="退款"/>
+             <van-nav-bar left-arrow v-if="(this.list.status == 4)" @click-left="undo" title="已完成评价"/>
+
+             <div id="recomTime" v-if="(this.list.status == 0)">剩余支付时间 {{rocallTime}}</div>
+
         </div> 
         <br>
         <div class="address">
             <van-row>
-                <van-col offset="5">送至{{this.list.address}}</van-col>
+                <van-col offset="1"><h3><van-icon name="location-o" />{{list.address}}</h3></van-col>
             </van-row>
             <van-row>
-                <van-col offset="6">{{this.list.name}}</van-col>
-                <van-col>{{this.list.tel}}</van-col>
+                <van-col offset="1">{{list.name}}</van-col>
+                <van-col offset="1">{{list.tel}}</van-col>
             </van-row>
         </div>
         <br>
         <div class="card">
             <van-row>
-                <van-icon name="shop-o" />{{this.list.shopName}}<van-icon name="arrow" />
+                <van-icon name="shop-o" />{{list.shopName}}<van-icon name="arrow" />
             </van-row>
             <br>
             <van-row gutter="8">
@@ -29,22 +36,22 @@
                 </van-col>
                 <van-col>
                     <van-row>
-                        {{this.list.goodsName}}
+                        {{list.goodsName}}
                     </van-row>
                     <van-row>
-                        {{this.list.describes}}
+                        {{list.describes}}
                     </van-row>
                         <br>
                     <van-row>
                         <van-tag plain type="danger">七天无理由退换</van-tag>
                     </van-row>
                 </van-col>
-                <van-col offset="8">
+                <van-col offset="6">
                     <van-row style="text-align: right;">
-                        ￥{{this.list.totalPrice}}
+                        ￥{{list.totalPrice}}
                     </van-row>
                     <van-row style="text-align: right;">
-                        x{{this.list.productCount}}
+                        x{{list.productCount}}
                     </van-row>
                 </van-col>
             </van-row>
@@ -54,56 +61,71 @@
             <br>
             <van-row>
                 <van-col>
-                    实付款
+                    实付款:
                 </van-col>
-                <van-col offset="17">
-                    ￥{{this.list.totalPrice}}
-                </van-col>
-            </van-row>
-            <van-row>
-                <van-col>
-                    订单编号
-                </van-col>
-                <van-col offset="18">
-                    {{this.list.orderNo}}
+                <van-col offset="3">
+                    ￥{{list.totalPrice}}
                 </van-col>
             </van-row>
             <van-row>
                 <van-col>
-                    下单时间
+                    订单编号:
                 </van-col>
-                <van-col offset="12">
-                    {{this.list.orderTime}}
+                <van-col offset="2">
+                    {{list.orderNo}}
+                </van-col>
+            </van-row>
+            <van-row>
+                <van-col>
+                    下单时间:
+                </van-col>
+                <van-col offset="2">
+                    {{list.orderTime}}
+                </van-col>
+            </van-row>
+            <van-row v-if="(this.list.status < -1)">
+                <van-col>
+                    退单理由：
+                </van-col>
+                <van-col offset="1">
+                    {{list.reason}}
                 </van-col>
             </van-row>
         </div>
         <div class="bottom">
             <van-row gutter="20">
                 <van-col offset="10">
-                    <van-button round plain type="info" v-if="(this.list.status == 0)" >取消订单</van-button>
-                    <van-button round plain type="info" v-if="(this.list.status == 1)" >申请退款</van-button>
-                    <van-button round plain type="info" v-if="(this.list.status == 2)" >确认收货</van-button>
-                    <van-button round plain type="info" v-if="(this.list.status == 3)" >再次购买</van-button>
-                    <van-button round plain type="info" v-if="(this.list.status == 4)" >再次购买</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 0)" @click="cancel">取消订单</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 1)" @click="exit">申请退单</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 2)" @click="got">确认收货</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 3)" @click="rebuy">再次购买</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 4)" @click="rebuy">再次购买</van-button>
                 </van-col>
                 <van-col>
-                    <van-button round plain type="info" v-if="(this.list.status == 0)" >继续付款</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 0)" @click="buy">继续付款</van-button>
                     <van-button round plain type="info" v-if="(this.list.status == 1)" >修改地址</van-button>
-                    <van-button round plain type="info" v-if="(this.list.status == 2)" >申请售后</van-button>
-                    <van-button round plain type="info" v-if="(this.list.status == 3)" >评价</van-button>
-                    <van-button round plain type="info" v-if="(this.list.status == 4)" >删除</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 2)" @click="exit">申请售后</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 3)" @click="evaluate">评价</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 4)" @click="det">删除</van-button>
                 </van-col>
             </van-row>
         </div>
+        <van-dialog v-model="show" title="请输入退单理由" show-cancel-button  :before-close="beforeClose">
+            <van-field v-model="text" label="在此输入：" />
+          </van-dialog>
     </div>
 </template>
 
 <script>
+    import { Dialog } from 'vant';
     export default {
         data(){
             return{
+                text:'',
                 id: this.$route.query.id,
+                show: false,
                 list:[],
+
             }
         },
         mounted() {
@@ -118,13 +140,123 @@
                 }
             })
         },
+
         methods: {
             undo(){
                 this.$router.go(-1);
             },
 
-        }
-      
+            rebuy(item){
+          this.$router.push('/goodsInfo?goodsId=' + this.list.goodsId);
+            },
+            buy(){      //付款
+              Dialog.confirm({
+                title: '确认订单',
+                message:
+                  '确认付款',
+              })
+                .then(() => {
+                  // on confirm
+                  this.$ajax.updStatus(1,this.list.id).then(
+                    res => {  
+                      if(res.data == 1) {      
+                      Dialog({ message: '付款成功' });
+                    }   
+                  })
+                })
+                .catch(() => {
+                  // on cancel
+                  Dialog({ message: '付款已取消' });
+                });
+            },
+
+            got(){    //确认收货
+              Dialog.confirm({
+                title: '确认收货',
+                message:
+                  '确认收货？',
+              })
+                .then(() => {
+                  // on confirm
+                  this.$ajax.updStatus(3,this.list.id).then(
+                    res => {  
+                      if(res.data == 1) {      
+                      Dialog({ message: '收货成功' });
+                    }   
+                  })
+                })
+                .catch(() => {
+                  // on cancel
+                  Dialog({ message: '取消' });
+                });
+        
+            },
+            exit(){     //申请退单
+              this.show=true
+            },
+            beforeClose : function (action, done) { // 点击事件 - 备注按钮提示框
+                    if (action === 'confirm') { // 确认退款
+                      this.$ajax.updStatus(-2,this.list.id).then(
+                        res => {  
+                          if(res.data == 1) {      
+                            Dialog({ message: '已申请退款' });
+                            }   
+                      })
+                      this.$ajax.addReason(this.text,this.list.id)
+                      this.$router.push('/order');
+                      done(); // 关闭提示框
+                    }
+                    else if(action === 'cancel')
+                      done(); // 关闭提示框
+
+              },
+
+            evaluate(){     //评价
+              this.$ajax.updStatus(4,this.list.id).then(
+                  res => {  
+                    if(res.data == 1) {      
+                    Dialog({ message: '评价成功，订单已完成' });
+                  }   
+              })
+            },
+            cancel(){   //取消订单
+              Dialog.confirm({
+                title: '取消订单',
+                message:
+                  '确认取消？',
+              })
+                .then(() => {
+                  // on confirm
+                  this.$ajax.updStatus(-1,this.list.id).then(
+                    res => {  
+                      if(res.data == 1) {      
+                      Dialog({ message: '已取消成功' });
+                    }   
+                  })
+                })
+                .catch(() => {
+                  // on cancel
+                });
+            },
+
+            det(){
+              Dialog.confirm({
+                title: '删除订单',
+                message:
+                  '确认删除？',
+              })
+                .then(() => {
+                  // on confirm
+                  this.$ajax.detOrder(this.list.id);
+                  Dialog({ message: '订单记录已删除' });
+                  this.$router.push('/order');
+                })
+                .catch(() => {
+                  // on cancel
+                });
+            },
+              }
+            
     }
     </script>
 
@@ -136,7 +268,7 @@
         height: 6vh;
     }
     .address{
-        height: 8vh;
+        height: 20vh;
         background-color: white;
         text-align: left;
         border: 1px dotted darkslategray;
@@ -144,7 +276,7 @@
         overflow: auto;
     }
     .card{
-        height: 76vh;
+        height: 60vh;
         background-color: white;
         text-align: left;
         border: 1px dotted darkslategray;

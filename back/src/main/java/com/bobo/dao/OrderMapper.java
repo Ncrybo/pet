@@ -13,6 +13,9 @@ public interface OrderMapper {
     @Update("update shop_order set status = #{status} where id = #{id}")
     public void updStatus(Integer status,Integer id);
 
+    @Update("update shop_order set reason = #{reason} where id = #{id}")
+    public void addReason(String reason,Integer id);
+
     @Delete("delete from shop_order where id = #{id}")
     public void delOrder(Integer id);
 
@@ -20,7 +23,8 @@ public interface OrderMapper {
             "shop_useraddress on address_id = shop_useraddress.id")
     Order getDetail(Integer id);
 
-    @Insert("insert into shop_order(order_no,goods_id,status,product_count,total_price,address_id " +
-            "user_id,order_time) values(#{no},#{goodsId},#{status},#{productCount},#{totalPrice},#{addressId})")
+    @Insert("insert into shop_order(order_no,goods_id,status,product_count,total_price,address_id," +
+            "user_id,order_time) values(#{orderNo},#{goodsId},#{status},#{productCount},#{totalPrice}," +
+            "#{addressId},#{userId},#{orderTime})")
     void addOrder(Order order);
 }

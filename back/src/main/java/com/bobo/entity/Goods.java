@@ -13,4 +13,5 @@ public class Goods implements Serializable {
     private Double price;
     private String describes;
     private Integer type;
+    private String video;
 }

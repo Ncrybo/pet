@@ -5,7 +5,7 @@
     </div>
     <div class="main">
         <div class="title">
-            <van-icon name="/logo.jpg"  size="2.6em"/><span>登录体验更多精彩</span> 
+            <van-icon name="/logo.png"  size="2.6em"/><span>登录体验更多精彩</span> 
         </div>
         <div class="login_form">
             <van-form >
@@ -45,7 +45,7 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      id: "小明",
+      username: "小明",
       password: "123456",
       checked: false,
       saveDisable: true,
@@ -77,7 +77,7 @@ export default {
 
     login() {
       this.$ajax
-        .login({ uname: this.id, psw: this.password })
+        .login({ uname: this.username, psw: this.password })
         .then((res) => {
           if (res.code === 100) {
             this.successLogin(res);

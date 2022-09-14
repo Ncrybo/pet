@@ -39,6 +39,7 @@
             logout() {
                 localStorage.removeItem("username");
                 localStorage.removeItem("token");
+                localStorage.removeItem("ids");
                 this.$router.push('/my')
             }
         }

@@ -16,6 +16,8 @@ public class OrderService {
 
     public void updStatus(Integer status,Integer id){orderMapper.updStatus(status,id);}
 
+    public void addReason(String reason,Integer id){orderMapper.addReason(reason,id);}
+
     public void detCOrder(Integer id){orderMapper.delOrder(id);}
 
     public Order getDetail(Integer id){return orderMapper.getDetail(id);}
