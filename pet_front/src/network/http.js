@@ -154,6 +154,12 @@ export default {
     getAllGoods(){
         return instance.post('/getAllGoods')
     },
+    getCartTop(){
+        return instance.post('/getCartTop')
+    },
+    getOrderTop(){
+        return instance.post('/getOrderTop')
+    },
     //潘书剑
 
 
