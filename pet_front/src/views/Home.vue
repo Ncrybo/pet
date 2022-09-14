@@ -38,50 +38,17 @@
           </div>
          </div>
         </template>
-        <!-- 弹窗区 -->
-        
-        <van-dialog v-model="show1" title="英短金渐层" show-cancel-button>
-          <van-image src="/images/pet/cat1.jpg" height="150%" width="100%" />
-        </van-dialog>
-
-        <van-dialog v-model="show2" title="英短银渐层" show-cancel-button>
-            <video ref="videoPlayer1" controls :src=fileUrl1 :poster=posterUrl1 controlslist="nodownload" 
-                 style="width: 100%; height: 100%; object-fit: fill">
-            </video>
-        </van-dialog>
-
-        <van-dialog v-model="show3" title="冰种蓝猫" show-cancel-button>
-          <van-image src="/images/pet/cat6.jpg" height="150%" width="100%" />
-        </van-dialog>
-
-        <van-dialog v-model="show4" title="柯基" show-cancel-button>
-          <van-image src="/images/pet/dog2.jpg" height="150%" width="100%" />
-        </van-dialog>
-
-        <van-dialog v-model="show5" title="哈士奇" show-cancel-button>
-          <van-image src="/images/pet/dog6.jpg" height="150%" width="100%" />
-        </van-dialog>
-
-        <van-dialog v-model="show6" title="萨摩耶" show-cancel-button>
-          <van-image src="/images/pet/dog7.jpg" height="150%" width="100%" />
-        </van-dialog>
-
-        <van-dialog v-model="show7" title="柴犬" show-cancel-button>
-          <video ref="videoPlayer2" controls :src=fileUrl2 :poster=posterUrl2 controlslist="nodownload" 
-                 style="width: 100%; height: 100%; object-fit: fill">
-          </video>
-        </van-dialog>
         
         <div class="heng">
-          <div class="goodsItem" v-for="(item,index) in listcat" :key="index">
-            <van-image :src="item.img" fit="cover" width="30vw" @click="shows(index)"/>
+          <div class="goodsItem" v-for="(item,index) in list1" :key="index">
+            <van-image :src="item.img" fit="cover" width="30vw" @click="gotogoods(item)"/>
             <div class="goodsname">{{item.name}}</div>
-            <div class="prices"><span class="tejia">￥{{item.tejia}}</span> <span class="yuanjia">￥{{item.yuanjia}}</span> </div>
+            <div class="prices"><span class="tejia">￥{{item.price * 0.5}}</span> <span class="yuanjia">￥{{item.price}}</span> </div>
           </div>
         </div>
       </van-panel>
       <!-- 热门------
-          分为两部分，第一个是头部的标题，第而部分是商品列表
+          分为两部分，第一个是头部的标题，第二部分是商品列表
        -->
       <div class="remen">
         <div class="tou">
@@ -90,10 +57,10 @@
         </div>
         <div class="remen_content">
           <van-grid :column-num="2" :center="false" :square="false">
-            <van-grid-item class="card" v-for="(item,id) in listdog" :key="id">
-              <van-image :src="item.img" width="100%"  @click="shows(id+3)"/>
+            <van-grid-item class="card" v-for="(item,id) in list2" :key="id">
+              <van-image :src="item.img" width="100%"  @click="gotogoods(item)"/>
               <div class="goodsname">{{item.name}}</div>
-              <div class="prices re_price">￥{{item.yuanjia}}</div>
+              <div class="prices re_price">￥{{item.price}}</div>
             </van-grid-item>
           </van-grid>
         </div>
@@ -112,83 +79,40 @@ export default {
   components:{TabBar},
   data() {
     return {
-      fileUrl1:"/images/pet/cat1.mp4",
-      posterUrl1:"/images/pet/cat5.jpg",
-      fileUrl2:"/images/pet/dog1.mp4",
-      posterUrl2:"/images/pet/dog8.jpg",
-
-      show1:false,
-      show2:false,
-      show3:false,
-      show4:false,
-      show5:false,
-      show6:false,
-      show7:false,
       images: [
         '/images/swipe/1.jpg',
         '/images/swipe/2.jpg',
       ],
-   listcat: [
-        {
-          name: "英短金渐层",
-          yuanjia: "6666",
-          tejia:"3888",
-          img: "/images/pet/cat1.jpg",
-        },
-        {
-          name: "英短银渐层",
-          yuanjia: "8888",
-          tejia:"5888",
-          img: "/images/pet/cat5.jpg",
-        },
-        {
-          name: "冰种蓝猫",
-          yuanjia: "9999",
-          tejia:"7888",
-          img: "/images/pet/cat6.jpg",
-        },
-      ],
-    listdog: [
-        {
-          name: "柯基",
-          yuanjia: "2888",
-          img: "/images/pet/dog2.jpg",
-        },
-        {
-          name: "哈士奇",
-          yuanjia: "3888",
-          img: "/images/pet/dog6.jpg",
-        },
-        {
-          name: "萨摩耶",
-          yuanjia: "6888",
-          img: "/images/pet/dog7.jpg",
-        },
-        {
-          name: "柴犬",
-          yuanjia: "6999",
-          img: "/images/pet/dog8.jpg",
-        },
-      ],
-      
+   list1: [],
+   list2: [],
+
     }
   },
+  mounted(){
+    this.$ajax.getCartTop().then(
+          res => {        
+            if(res.code == 100) {      
+              this.list1 = res.data;   
+  
+          }
+          else {
+              console.log(res);
+          }
+      })
+      this.$ajax.getOrderTop().then(
+          res => {        
+            if(res.code == 100) {      
+              this.list2 = res.data;   
+  
+          }
+          else {
+              console.log(res);
+          }
+      })
+  },
     methods: {
-      shows(index){
-        if(index == 0)
-          this.show1 = true
-        else if(index == 1)
-          this.show2 = true
-        else if(index == 2)
-          this.show3 = true
-        else if(index == 3)
-          this.show4 = true
-        else if(index == 4)
-          this.show5 = true
-        else if(index == 5)
-          this.show6 = true
-        else if(index == 6)
-          this.show7 = true
+      gotogoods(item){
+        this.$router.push('/goodsInfo?goodsId=' + item.id);
       }
     }
 

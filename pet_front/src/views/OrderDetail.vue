@@ -11,8 +11,6 @@
              <van-nav-bar left-arrow v-if="(this.list.status == 3)" @click-left="undo" title="交易成功"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 4)" @click-left="undo" title="已完成评价"/>
 
-             <div id="recomTime" v-if="(this.list.status == 0)">剩余支付时间 {{rocallTime}}</div>
-
         </div> 
         <br>
         <div class="address">
