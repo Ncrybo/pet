@@ -274,6 +274,7 @@ export default {
             this.$ajax.updStatus(-1,item.id).then(
               res => {  
                 if(res.data == 1) {      
+                this.$ajax.addReason('用户手动取消',item.id)
                 Dialog({ message: '已取消成功' });
                 this.$router.push('/orderdetail?id=' + item.id);
               }   

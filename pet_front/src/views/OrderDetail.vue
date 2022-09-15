@@ -81,6 +81,14 @@
                     {{list.orderTime}}
                 </van-col>
             </van-row>
+            <van-row v-if="(this.list.status == -1)">
+              <van-col>
+                  取消原因：
+              </van-col>
+              <van-col offset="1">
+                  {{list.reason}}
+              </van-col>
+          </van-row>
             <van-row v-if="(this.list.status < -1)">
                 <van-col>
                     退单理由：
@@ -89,6 +97,17 @@
                     {{list.reason}}
                 </van-col>
             </van-row>
+            <br>
+            <div class="countDown" v-if="(this.list.status == 0)" >
+              订单剩余支付时间<van-count-down
+              ref="countDown"
+              millisecond
+              :auto-start="true"
+              :time=this.overTime
+              format="mm:ss:SSS"
+              @finish="finish"
+            />
+           </div>
         </div>
         <div class="bottom">
             <van-row gutter="20">
@@ -123,27 +142,46 @@
                 id: this.$route.query.id,
                 show: false,
                 list:[],
-
+                overTime: 15000,
             }
         },
         mounted() {
+
+
         this.$ajax.getDetail(this.id).then(
             res => {        
                 if(res.code == 100) {      
-                    this.list = res.data;   
-                    console.log(list);
+                    this.list = res.data;  
+                    let endTime= new Date(this.list.orderTime).getTime() + 30*60*1000;
+                    let start_time = new Date().getTime();
+                    this.overTime = endTime - start_time;//时间戳
                 }
                 else {
                     console.log(res);
-                }
+                }          
             })
+
         },
 
         methods: {
             undo(){
                 this.$router.go(-1);
+                console.log(this.TimeDate)
+            
             },
+            finish() {          //支付倒计时结束
+              if(this.list.status == 0){
+                Dialog({ message: '订单已超时' });
+                this.$ajax.updStatus(-1,this.list.id).then(
+                    res => {  
+                      if(res.data == 1) {   
+                      this.$ajax.addReason('订单超时',this.list.id)   
+                      Dialog({ message: '订单因超时取消' });
+                    }   
+                })
 
+              }
+            },
             rebuy(item){
           this.$router.push('/goodsInfo?goodsId=' + this.list.goodsId);
             },
@@ -228,6 +266,7 @@
                   this.$ajax.updStatus(-1,this.list.id).then(
                     res => {  
                       if(res.data == 1) {      
+                      this.$ajax.addReason('用户手动取消',this.list.id)
                       Dialog({ message: '已取消成功' });
                     }   
                   })
@@ -264,6 +303,14 @@
     }
     .header{
         height: 6vh;
+    }
+    .countDown{
+      color: red;
+      text-align: center;
+      margin-left: 0px;
+    }
+    .van-count-down{
+      color: red;
     }
     .address{
         height: 20vh;
