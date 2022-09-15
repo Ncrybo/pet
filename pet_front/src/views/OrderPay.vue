@@ -99,6 +99,7 @@
             onSubmit(){
                 if(this.list.name != null)
                 {
+
                     Dialog.confirm({
                     title: '支付订单',
                     message:
@@ -113,6 +114,7 @@
                             res => {        
                             if(res.code == 100) {      
                                 Toast.success("订单已生成")
+              //                  this.$ajax.detCart(arr[j].id);  //从购物车移除该商品
                             }
                             else {
                                 console.log(res);
@@ -129,6 +131,7 @@
                             res => {        
                             if(res.code == 100) {      
                                 Toast.success("已添加到待付款")
+             //                  this.$ajax.detCart(arr[j].id);  //从购物车移除该商品
                             }
                             else {
                                 console.log(res);
