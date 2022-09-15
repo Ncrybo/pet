@@ -190,7 +190,6 @@ export default {
           res => {        
             if(res.code == 100) {      
               this.list = res.data;   
-              console.log(res);
           }
           else {
               console.log(res);

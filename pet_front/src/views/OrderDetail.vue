@@ -177,6 +177,7 @@
                       if(res.data == 1) {   
                       this.$ajax.addReason('订单超时',this.list.id)   
                       Dialog({ message: '订单因超时取消' });
+                      this.$router.push('/order');
                     }   
                 })
 

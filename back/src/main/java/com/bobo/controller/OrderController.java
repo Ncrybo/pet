@@ -25,6 +25,11 @@ public class OrderController {
         return Result.succeed("获取订单成功",orderList);
     }
 
+    @PostMapping("/getLastOrderId")
+    public Result getLastOrderId(){
+        return Result.succeed("获取最新订单id成功",orderService.getLastOrderId());
+    }
+
     @PostMapping("/updStatus/{status}/{id}")
     public Result updStatus(@PathVariable("status")Integer status,@PathVariable("id")Integer id){
         orderService.updStatus(status,id);
@@ -45,7 +50,6 @@ public class OrderController {
 
     @PostMapping("/getDetail")
     public Result getDetail(@RequestParam("id")Integer id){
-
         Order order = orderService.getDetail(id);
         return Result.succeed("获取订单详情成功",order);
     }

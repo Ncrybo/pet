@@ -110,11 +110,17 @@
                         Toast.success("付款成功")
                         for(let j=0;j<this.arr.length;j++)
                         {
-                            this.$ajax.addOrder({orderNo:j,goodsId:this.goods[j].goodsId,status:1,productCount:this.goods[j].count,totalPrice:this.goods[j].price * this.goods[j].count,addressId:this.list.id,userId:this.uid}).then(
+                            this.$ajax.addOrder({goodsId:this.goods[j].goodsId,status:1,productCount:this.goods[j].count,totalPrice:this.goods[j].price * this.goods[j].count,addressId:this.list.id,userId:this.uid}).then(
                             res => {        
                             if(res.code == 100) {      
                                 Toast.success("订单已生成")
-              //                  this.$ajax.detCart(arr[j].id);  //从购物车移除该商品
+                                this.$ajax.detCart(this.arr[j]);  //从购物车移除该商品
+                                this.$ajax.getLastOrderId().then(       //跳转详情页
+                                    res => {
+                                        let ids = res.data
+                                        this.$router.push('/orderdetail?id=' + ids);
+                                    }
+                                )        
                             }
                             else {
                                 console.log(res);
@@ -127,11 +133,17 @@
                         Toast.success("付款失败")
                         for(let j=0;j<this.arr.length;j++)
                         {
-                            this.$ajax.addOrder({orderNo:j,goodsId:this.goods[j].goodsId,status:0,productCount:this.goods[j].count,totalPrice:this.goods[j].price * this.goods[j].count,addressId:this.list.id,userId:this.uid}).then(
+                            this.$ajax.addOrder({goodsId:this.goods[j].goodsId,status:0,productCount:this.goods[j].count,totalPrice:this.goods[j].price * this.goods[j].count,addressId:this.list.id,userId:this.uid}).then(
                             res => {        
                             if(res.code == 100) {      
-                                Toast.success("已添加到待付款")
-             //                  this.$ajax.detCart(arr[j].id);  //从购物车移除该商品
+                                Toast.success("已添加到待付款")                          
+                                this.$ajax.detCart(this.arr[j]);  //从购物车移除该商品
+                                this.$ajax.getLastOrderId().then(       //跳转详情页
+                                    res => {
+                                        let ids = res.data
+                                        this.$router.push('/orderdetail?id=' + ids);
+                                    }
+                                )                           
                             }
                             else {
                                 console.log(res);

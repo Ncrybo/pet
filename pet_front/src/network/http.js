@@ -147,6 +147,10 @@ export default {
     payCart(id){
         return instance.post('/payCart/'+id)
     },
+    getLastOrderId(){
+        return instance.post('/getLastOrderId')
+    },
+
     //李炜东
     addUser(uname,psw){
         return instance.post('/addUser/'+uname+'/'+psw)

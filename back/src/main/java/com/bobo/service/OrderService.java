@@ -14,6 +14,8 @@ public class OrderService {
 
     public List<Order> getOrders(Integer uid){return orderMapper.getOrders(uid);}
 
+    public Integer getLastOrderId(){return orderMapper.getLastOrderId();}
+
     public void updStatus(Integer status,Integer id){orderMapper.updStatus(status,id);}
 
     public void addReason(String reason,Integer id){orderMapper.addReason(reason,id);}
