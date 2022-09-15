@@ -85,12 +85,25 @@ export default {
               this.$refs.checkboxGroup.toggleAll(false);
       },
       det(obj,id,index){
-        this.shops[id].list.splice(index,1);
-        this.$ajax.detCart(obj.id);
-        if(this.shops[id].list.length === 0)
-        {
-            this.shops.splice(id,1);
-        }
+        Dialog.confirm({
+          title: '移除商品',
+          message:
+            '确定移除该商品吗？',
+        })
+          .then(() => {
+            // on confirm
+            this.shops[id].list.splice(index,1);
+            this.$ajax.detCart(obj.id);
+            if(this.shops[id].list.length === 0)
+            {
+                this.shops.splice(id,1);
+            }
+          })
+          .catch(() => {
+            // on cancel
+
+          });
+
       },
       increase(obj){
         if(obj.type === "1")
