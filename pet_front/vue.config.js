@@ -4,11 +4,7 @@ module.exports = defineConfig({
   lintOnSave: false,
 
   devServer: {
-<<<<<<< HEAD
     host: 'localhost',
-=======
-    host: '127.0.0.1',
->>>>>>> 0b7e9846aab2c9753fe0279f94b5d759b799f486
     open: true,
     proxy: {
       '/pet-api/*': {
