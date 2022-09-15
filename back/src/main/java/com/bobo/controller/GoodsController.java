@@ -1,14 +1,11 @@
 package com.bobo.controller;
 
 import com.bobo.dao.GoodsMapper;
-import com.bobo.entity.Counts;
 import com.bobo.entity.Goods;
 import com.bobo.entity.Result;
 import com.bobo.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class GoodsController {
@@ -30,22 +27,22 @@ public class GoodsController {
 
     @PostMapping("/getCartTop")
     public Result getCartTop() {
-        Counts[] counts = goodsService.getCartTop();
+        Integer[] counts = goodsService.getCartTop();
         Goods[] goods = new Goods[3];
-        goods[0] = goodsService.getGoodsById(counts[0].getGoodsId());
-        goods[1] = goodsService.getGoodsById(counts[1].getGoodsId());
-        goods[2] = goodsService.getGoodsById(counts[2].getGoodsId());
+        goods[0] = goodsService.getGoodsById(counts[0]);
+        goods[1] = goodsService.getGoodsById(counts[1]);
+        goods[2] = goodsService.getGoodsById(counts[2]);
         return Result.succeed("返回用户购物车里出现次数最多的3个商品",goods);
     }
 
     @PostMapping("/getOrderTop")
     public Result getOrderTop() {
-        Counts[] counts1 = goodsService.getOrderTop();
+        Integer[] counts1 = goodsService.getOrderTop();
         Goods[] goods1 = new Goods[4];
-        goods1[0] = goodsService.getGoodsById(counts1[0].getGoodsId());
-        goods1[1] = goodsService.getGoodsById(counts1[1].getGoodsId());
-        goods1[2] = goodsService.getGoodsById(counts1[2].getGoodsId());
-        goods1[3] = goodsService.getGoodsById(counts1[3].getGoodsId());
+        goods1[0] = goodsService.getGoodsById(counts1[0]);
+        goods1[1] = goodsService.getGoodsById(counts1[1]);
+        goods1[2] = goodsService.getGoodsById(counts1[2]);
+        goods1[3] = goodsService.getGoodsById(counts1[3]);
         return Result.succeed("返回用户订单里出现次数最多的4个商品",goods1);
     }
 
