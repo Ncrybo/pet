@@ -91,7 +91,7 @@
           <van-tag plain type="danger">买家已付款</van-tag>
         </template>
         <template #footer>
-          <van-button size="mini" @click.stop="exit(item)">申请退款</van-button>
+          <van-button size="mini" @click.stop="cancel(item)">申请退款</van-button>
           <van-button size="mini">修改地址</van-button>
         </template>
         </van-card>
@@ -145,7 +145,7 @@
         <van-tab title="退单退款">
           <van-card
           v-for="(item,index) in list" 
-          v-if="(item.status < -1)" 
+          v-if="(item.status < 0)" 
           :key="index"
           :price="item.totalPrice"
           :desc="item.describes"
@@ -155,6 +155,7 @@
           @click="gotodetail(item)"
         >
         <template #tags>
+          <van-tag plain type="danger" v-if="(item.status == -1)" >订单已取消</van-tag>
           <van-tag plain type="danger" v-if="(item.status == -2)" >退单等待审核</van-tag>
           <van-tag plain type="danger" v-if="(item.status == -3)" >退单成功</van-tag>
           <van-tag plain type="danger" v-if="(item.status == -4)" >已被管理员退单</van-tag>

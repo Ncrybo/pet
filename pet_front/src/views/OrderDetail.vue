@@ -117,6 +117,7 @@
                     <van-button round plain type="info" v-if="(this.list.status == 2)" @click="got">确认收货</van-button>
                     <van-button round plain type="info" v-if="(this.list.status == 3)" @click="rebuy">再次购买</van-button>
                     <van-button round plain type="info" v-if="(this.list.status == 4)" @click="rebuy">再次购买</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status < 0)" @click="rebuy">再次购买</van-button>
                 </van-col>
                 <van-col>
                     <van-button round plain type="info" v-if="(this.list.status == 0)" @click="buy">继续付款</van-button>
@@ -124,6 +125,7 @@
                     <van-button round plain type="info" v-if="(this.list.status == 2)" @click="exit">申请售后</van-button>
                     <van-button round plain type="info" v-if="(this.list.status == 3)" @click="evaluate">评价</van-button>
                     <van-button round plain type="info" v-if="(this.list.status == 4)" @click="det">删除</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status < 0)" @click="det">删除</van-button>
                 </van-col>
             </van-row>
         </div>
