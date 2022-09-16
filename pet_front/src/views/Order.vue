@@ -260,6 +260,7 @@ export default {
             res => {  
               if(res.data == 1) {      
               Dialog({ message: '评价成功，订单已完成' });
+              this.$router.push('/orderdetail?id=' + item.id);
             }   
         })
       },

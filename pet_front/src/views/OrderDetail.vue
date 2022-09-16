@@ -150,8 +150,6 @@
             }
         },
         mounted() {
-
-
         this.$ajax.getDetail(this.id).then(
             res => {        
                 if(res.code == 100) {      
