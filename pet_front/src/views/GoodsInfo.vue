@@ -65,7 +65,7 @@
           <van-icon name="certificate" color="orange"/>养宠套餐服务&nbsp&nbsp
           <van-icon name="certificate" color="orange"/>疫苗接种服务</span></div>
         <van-divider />
-        <div class="assess"><van-cell title="用户评价" is-link value="更多评价"/>
+        <div class="assess"><van-cell title="用户评价" is-link to="/HomeView" value="更多评价"/>
             <div v-for="item in assesses">
               <van-row gutter="10">
                 <van-col offset="1">
