@@ -24,7 +24,7 @@
           <van-tag v-if="(item.status == 3)" plain type="danger">交易成功</van-tag>
           <van-tag v-if="(item.status == 4)" plain type="danger">已完成评价</van-tag>
           <van-tag v-if="(item.status == -1)" plain type="danger">订单已取消</van-tag>
-          <van-tag v-if="(item.status == -2)" plain type="danger">退单等待审核</van-tag>
+          <van-tag v-if="(item.status == -2)" plain type="danger">退单待审核</van-tag>
           <van-tag v-if="(item.status == -3)" plain type="danger">退单成功</van-tag>
           <van-tag v-if="(item.status == -4)" plain type="danger">已被管理员退单</van-tag>
         </template>
@@ -32,13 +32,13 @@
           <van-button v-if="(item.status == 0)" size="mini" @click.stop="cancel(item)">取消订单</van-button>
           <van-button v-if="(item.status == 0)" size="mini" >继续付款</van-button>
 
-          <van-button v-if="(item.status == 1)" size="mini" @click.stop="exit(item)">申请退款</van-button>
+          <van-button v-if="(item.status == 1)" size="mini" @click.stop="cancel(item)">申请退款</van-button>
           <van-button v-if="(item.status == 1)" size="mini">修改地址</van-button>
 
           <van-button v-if="(item.status == 2)" size="mini" @click.stop="got(item)">确认收货</van-button>
           <van-button v-if="(item.status == 2)" size="mini" @click.stop="exit(item)">申请售后</van-button>
 
-          <van-button v-if="(item.status == 3)" size="mini" @click.stop="rebuy(item)">再次购买</van-button>
+          <van-button v-if="(item.status == 3)" size="mini" @click.stop="exit(item)">申请售后</van-button>
           <van-button v-if="(item.status == 3)" size="mini" @click.stop="evaluate(item)">评价</van-button>
 
           <van-button v-if="(item.status == 4)" size="mini" @click.stop="rebuy(item)">再次购买</van-button>
@@ -135,7 +135,7 @@
           <van-tag plain type="danger">交易成功</van-tag>
         </template>
         <template #footer>
-          <van-button size="mini" @click.stop="rebuy(item)">再次购买</van-button>
+          <van-button size="mini" @click.stop="exit(item)">申请售后</van-button>
           <van-button size="mini" @click.stop="evaluate(item)">评价</van-button>
         </template>
         </van-card>
@@ -156,7 +156,7 @@
         >
         <template #tags>
           <van-tag plain type="danger" v-if="(item.status == -1)" >订单已取消</van-tag>
-          <van-tag plain type="danger" v-if="(item.status == -2)" >退单等待审核</van-tag>
+          <van-tag plain type="danger" v-if="(item.status == -2)" >退单待审核</van-tag>
           <van-tag plain type="danger" v-if="(item.status == -3)" >退单成功</van-tag>
           <van-tag plain type="danger" v-if="(item.status == -4)" >已被管理员退单</van-tag>
         </template>

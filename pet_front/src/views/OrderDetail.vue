@@ -3,7 +3,7 @@
         <div class="header">
              <van-nav-bar left-arrow v-if="(this.list.status == -4)" @click-left="undo" title="已被管理员退单"/>
              <van-nav-bar left-arrow v-if="(this.list.status == -3)" @click-left="undo" title="退单成功"/>
-             <van-nav-bar left-arrow v-if="(this.list.status == -2)" @click-left="undo" title="已申请退单"/>
+             <van-nav-bar left-arrow v-if="(this.list.status == -2)" @click-left="undo" title="退单待审核"/>
              <van-nav-bar left-arrow v-if="(this.list.status == -1)" @click-left="undo" title="订单已取消"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 0)" @click-left="undo" title="等待付款"/>
              <van-nav-bar left-arrow v-if="(this.list.status == 1)" @click-left="undo" title="买家已付款"/>
@@ -113,9 +113,9 @@
             <van-row gutter="20">
                 <van-col offset="10">
                     <van-button round plain type="info" v-if="(this.list.status == 0)" @click="cancel">取消订单</van-button>
-                    <van-button round plain type="info" v-if="(this.list.status == 1)" @click="exit">申请退单</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 1)" @click="cancel">申请退款</van-button>
                     <van-button round plain type="info" v-if="(this.list.status == 2)" @click="got">确认收货</van-button>
-                    <van-button round plain type="info" v-if="(this.list.status == 3)" @click="rebuy">再次购买</van-button>
+                    <van-button round plain type="info" v-if="(this.list.status == 3)" @click="exit">申请售后</van-button>
                     <van-button round plain type="info" v-if="(this.list.status == 4)" @click="rebuy">再次购买</van-button>
                     <van-button round plain type="info" v-if="(this.list.status < -2)" @click="rebuy">再次购买</van-button>
                     <van-button round plain type="info" v-if="(this.list.status == -4)" @click="rebuy">再次购买</van-button>
