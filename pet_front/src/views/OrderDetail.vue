@@ -202,6 +202,7 @@
                     res => {  
                       if(res.data == 1) {      
                       Dialog({ message: '付款成功' });
+                      this.$router.push('/order');
                     }   
                   })
                 })
@@ -223,6 +224,7 @@
                     res => {  
                       if(res.data == 1) {      
                       Dialog({ message: '收货成功' });
+                      this.$router.push('/order');
                     }   
                   })
                 })
@@ -257,6 +259,7 @@
                   res => {  
                     if(res.data == 1) {      
                     Dialog({ message: '评价成功，订单已完成' });
+                    this.$router.push('/order');
                   }   
               })
             },
@@ -271,7 +274,8 @@
                   this.$ajax.updStatus(-1,this.list.id).then(
                     res => {  
                       if(res.data == 1) {      
-                      this.$ajax.addReason('用户手动取消',this.list.id)
+                      this.$ajax.addReason('用户取消',this.list.id)
+                      this.$router.push('/order');
                       Dialog({ message: '已取消成功' });
                     }   
                   })

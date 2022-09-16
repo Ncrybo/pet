@@ -62,7 +62,7 @@ public class OrderController {
         String str = format.format(date);
         order.setOrderTime(t);
         Random r = new Random(1);
-        order.setOrderNo(str +r.nextInt(90) + 10);
+        order.setOrderNo(str +r.nextInt(9000) + 10);
         orderService.addOrder(order);
         return Result.succeed("生成订单成功",1);
     }
