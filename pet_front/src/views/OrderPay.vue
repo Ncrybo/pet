@@ -39,7 +39,7 @@
         data(){
             return{
                 sum:0,
-                arr:this.$route.query.name,
+                arr:JSON.parse(this.$route.query.name),
                 uid:window.localStorage.getItem("uid"),
                 list: [],
                 goods: [],
