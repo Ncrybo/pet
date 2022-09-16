@@ -137,8 +137,9 @@ export default {
             }
       },
       onSubmit(){
+        let parObj = JSON.stringify(this.results)
         if(this.results.length > 0)
-          this.$router.push({path:"/orderpay", query: {name: this.results}})
+          this.$router.push({path:"/orderpay", query: {name: parObj}})
         else
           Toast.fail("您还没有选择商品哦！")
       },
