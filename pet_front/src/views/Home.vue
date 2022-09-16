@@ -58,7 +58,7 @@
         <div class="remen_content">
           <van-grid :column-num="2" :center="false" :square="false">
             <van-grid-item class="card" v-for="(item,id) in list2" :key="id">
-              <van-image :src="item.img" width="100%" height="40vw"  @click="gotogoods(item)"/>
+              <van-image :src="item.img" width="45vw" height="40vw"  @click="gotogoods(item)"/>
               <div class="goodsname">{{item.goodsName}}</div>
               <div class="prices re_price">￥{{item.price}}</div>
             </van-grid-item>
